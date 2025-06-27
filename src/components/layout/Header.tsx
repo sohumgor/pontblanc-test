@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from '@/components/ui/navigation-menu';
@@ -11,12 +11,23 @@ const Header = () => {
 
   const isActive = (path: string) => location.pathname === path;
 
+  // Scroll to top when route changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  const handleLinkClick = () => {
+    setIsMenuOpen(false);
+    // Additional scroll to top for mobile menu
+    setTimeout(() => window.scrollTo(0, 0), 50);
+  };
+
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center">
+          <Link to="/" className="flex items-center" onClick={handleLinkClick}>
             <span className="text-2xl font-bold text-primary">PONTBLANC</span>
           </Link>
 
@@ -24,7 +35,7 @@ const Header = () => {
           <NavigationMenu className="hidden lg:flex">
             <NavigationMenuList>
               <NavigationMenuItem>
-                <Link to="/about" className={`px-3 py-2 text-sm font-medium transition-colors hover:text-primary ${isActive('/about') ? 'text-primary' : 'text-gray-700'}`}>
+                <Link to="/about" className={`px-3 py-2 text-sm font-medium transition-colors hover:text-primary ${isActive('/about') ? 'text-primary' : 'text-gray-700'}`} onClick={handleLinkClick}>
                   About
                 </Link>
               </NavigationMenuItem>
@@ -34,7 +45,7 @@ const Header = () => {
                 <NavigationMenuContent>
                   <div className="grid gap-3 p-6 w-[400px]">
                     <NavigationMenuLink asChild>
-                      <Link to="/services/strategy" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                      <Link to="/services/strategy" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground" onClick={handleLinkClick}>
                         <div className="text-sm font-medium leading-none">Strategy Consulting</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Strategic planning and business model design
@@ -42,7 +53,7 @@ const Header = () => {
                       </Link>
                     </NavigationMenuLink>
                     <NavigationMenuLink asChild>
-                      <Link to="/services/operations" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                      <Link to="/services/operations" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground" onClick={handleLinkClick}>
                         <div className="text-sm font-medium leading-none">Operations Consulting</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Process improvement and efficiency optimization
@@ -50,7 +61,7 @@ const Header = () => {
                       </Link>
                     </NavigationMenuLink>
                     <NavigationMenuLink asChild>
-                      <Link to="/services/digital" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                      <Link to="/services/digital" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground" onClick={handleLinkClick}>
                         <div className="text-sm font-medium leading-none">Digital Transformation</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Technology strategy and digital modernization
@@ -66,22 +77,22 @@ const Header = () => {
                 <NavigationMenuContent>
                   <div className="grid gap-3 p-6 w-[300px]">
                     <NavigationMenuLink asChild>
-                      <Link to="/industries/startups" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
+                      <Link to="/industries/startups" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground" onClick={handleLinkClick}>
                         <div className="text-sm font-medium leading-none">Startups</div>
                       </Link>
                     </NavigationMenuLink>
                     <NavigationMenuLink asChild>
-                      <Link to="/industries/manufacturing" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
+                      <Link to="/industries/manufacturing" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground" onClick={handleLinkClick}>
                         <div className="text-sm font-medium leading-none">Manufacturing</div>
                       </Link>
                     </NavigationMenuLink>
                     <NavigationMenuLink asChild>
-                      <Link to="/industries/healthcare" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
+                      <Link to="/industries/healthcare" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground" onClick={handleLinkClick}>
                         <div className="text-sm font-medium leading-none">Healthcare</div>
                       </Link>
                     </NavigationMenuLink>
                     <NavigationMenuLink asChild>
-                      <Link to="/industries/nonprofits" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
+                      <Link to="/industries/nonprofits" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground" onClick={handleLinkClick}>
                         <div className="text-sm font-medium leading-none">Nonprofits</div>
                       </Link>
                     </NavigationMenuLink>
@@ -90,19 +101,19 @@ const Header = () => {
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <Link to="/case-studies" className={`px-3 py-2 text-sm font-medium transition-colors hover:text-primary ${isActive('/case-studies') ? 'text-primary' : 'text-gray-700'}`}>
+                <Link to="/case-studies" className={`px-3 py-2 text-sm font-medium transition-colors hover:text-primary ${isActive('/case-studies') ? 'text-primary' : 'text-gray-700'}`} onClick={handleLinkClick}>
                   Case Studies
                 </Link>
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <Link to="/blog" className={`px-3 py-2 text-sm font-medium transition-colors hover:text-primary ${isActive('/blog') ? 'text-primary' : 'text-gray-700'}`}>
+                <Link to="/blog" className={`px-3 py-2 text-sm font-medium transition-colors hover:text-primary ${isActive('/blog') ? 'text-primary' : 'text-gray-700'}`} onClick={handleLinkClick}>
                   Blog
                 </Link>
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <Link to="/resources" className={`px-3 py-2 text-sm font-medium transition-colors hover:text-primary ${isActive('/resources') ? 'text-primary' : 'text-gray-700'}`}>
+                <Link to="/resources" className={`px-3 py-2 text-sm font-medium transition-colors hover:text-primary ${isActive('/resources') ? 'text-primary' : 'text-gray-700'}`} onClick={handleLinkClick}>
                   Resources
                 </Link>
               </NavigationMenuItem>
@@ -111,7 +122,7 @@ const Header = () => {
 
           {/* CTA Button */}
           <Button asChild className="hidden lg:inline-flex">
-            <Link to="/contact">Book a Free Consultation</Link>
+            <Link to="/contact" onClick={handleLinkClick}>Book a Free Consultation</Link>
           </Button>
 
           {/* Mobile menu button */}
@@ -127,16 +138,16 @@ const Header = () => {
         {isMenuOpen && (
           <div className="lg:hidden py-4 border-t">
             <div className="space-y-2">
-              <Link to="/about" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">About</Link>
-              <Link to="/services/strategy" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Strategy Consulting</Link>
-              <Link to="/services/operations" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Operations Consulting</Link>
-              <Link to="/services/digital" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Digital Transformation</Link>
-              <Link to="/case-studies" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Case Studies</Link>
-              <Link to="/blog" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Blog</Link>
-              <Link to="/resources" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Resources</Link>
-              <Link to="/contact" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Contact</Link>
+              <Link to="/about" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={handleLinkClick}>About</Link>
+              <Link to="/services/strategy" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={handleLinkClick}>Strategy Consulting</Link>
+              <Link to="/services/operations" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={handleLinkClick}>Operations Consulting</Link>
+              <Link to="/services/digital" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={handleLinkClick}>Digital Transformation</Link>
+              <Link to="/case-studies" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={handleLinkClick}>Case Studies</Link>
+              <Link to="/blog" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={handleLinkClick}>Blog</Link>
+              <Link to="/resources" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={handleLinkClick}>Resources</Link>
+              <Link to="/contact" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={handleLinkClick}>Contact</Link>
               <Button asChild className="w-full mt-4">
-                <Link to="/contact">Book a Free Consultation</Link>
+                <Link to="/contact" onClick={handleLinkClick}>Book a Free Consultation</Link>
               </Button>
             </div>
           </div>
