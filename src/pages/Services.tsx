@@ -2,11 +2,13 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { Target, Users, Award, Lightbulb, ArrowRight } from 'lucide-react';
+import HeroSection from '@/components/ui/hero-section';
+import { Target, Settings, Zap, ArrowRight, CheckCircle, Sparkles, TrendingUp, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const Services = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [activeService, setActiveService] = useState<string | null>(null);
 
   useEffect(() => {
     setIsVisible(true);
@@ -15,7 +17,7 @@ const Services = () => {
   const services = [
     {
       id: 'strategy',
-      icon: <Target className="h-10 w-10" />,
+      icon: <Target className="h-12 w-12 text-white" />,
       title: "Strategy Consulting",
       headline: "Clarity and Direction for Sustainable Growth",
       description: "We help leadership teams clarify objectives, prioritize initiatives, and create scalable strategies.",
@@ -25,6 +27,8 @@ const Services = () => {
         "Business model design"
       ],
       ctaText: "Get a Strategy Session",
+      gradient: "from-blue-500 via-blue-600 to-indigo-700",
+      hoverGradient: "from-blue-600 via-indigo-600 to-purple-700",
       detailedDescription: "Our strategy consulting approach combines proven frameworks with deep industry knowledge to help you navigate complex business challenges. We work alongside your leadership team to develop actionable strategies that drive sustainable growth and competitive advantage.",
       process: [
         "Current state assessment and gap analysis",
@@ -35,7 +39,7 @@ const Services = () => {
     },
     {
       id: 'operations',
-      icon: <Users className="h-10 w-10" />,
+      icon: <Settings className="h-12 w-12 text-white" />,
       title: "Operations Consulting",
       headline: "Operational Efficiency That Drives Profit",
       description: "From supply chain to staffing, we optimize workflows that increase productivity and reduce cost.",
@@ -45,6 +49,8 @@ const Services = () => {
         "Cost reduction strategies"
       ],
       ctaText: "Optimize My Operations",
+      gradient: "from-emerald-500 via-green-600 to-teal-700",
+      hoverGradient: "from-emerald-600 via-teal-600 to-cyan-700",
       detailedDescription: "Transform your operations from cost centers into profit drivers. Our operations consulting focuses on streamlining processes, optimizing resource allocation, and building systems that scale with your growth.",
       process: [
         "Operational audit and bottleneck identification",
@@ -55,7 +61,7 @@ const Services = () => {
     },
     {
       id: 'digital',
-      icon: <Lightbulb className="h-10 w-10" />,
+      icon: <Zap className="h-12 w-12 text-white" />,
       title: "Digital Transformation",
       headline: "Modernize to Compete and Win",
       description: "We guide your tech strategy and digital roadmap—from automation to system integration.",
@@ -65,6 +71,8 @@ const Services = () => {
         "CRM/ERP implementation"
       ],
       ctaText: "Start Your Digital Audit",
+      gradient: "from-purple-500 via-violet-600 to-indigo-700",
+      hoverGradient: "from-purple-600 via-indigo-600 to-blue-700",
       detailedDescription: "Navigate the digital landscape with confidence. Our digital transformation services help you leverage technology to improve efficiency, enhance customer experience, and create new revenue streams.",
       process: [
         "Digital maturity assessment",
@@ -79,87 +87,90 @@ const Services = () => {
     const element = document.getElementById(serviceId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setActiveService(serviceId);
     }
   };
 
+  const benefits = [
+    {
+      icon: <Target className="h-8 w-8 text-primary" />,
+      title: "Results-Focused",
+      description: "We measure success by your outcomes, not our deliverables.",
+      gradient: "from-blue-400 to-blue-600"
+    },
+    {
+      icon: <Users className="h-8 w-8 text-primary" />,
+      title: "Hands-On Implementation",
+      description: "We don't just advise—we roll up our sleeves and help you execute.",
+      gradient: "from-green-400 to-emerald-600"
+    },
+    {
+      icon: <TrendingUp className="h-8 w-8 text-primary" />,
+      title: "Rapid Results",
+      description: "See meaningful improvements in weeks, not months.",
+      gradient: "from-purple-400 to-violet-600"
+    }
+  ];
+
   return (
-    <div className="overflow-hidden">
-      {/* Hero Section */}
-      <section className="relative min-h-[80vh] flex items-center justify-center bg-gradient-to-br from-white via-blue-50 to-cyan-50 px-6">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-72 h-72 bg-gradient-to-r from-blue-400 to-cyan-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse"></div>
-          <div className="absolute -bottom-40 -left-40 w-72 h-72 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse animation-delay-2000"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-gradient-to-r from-indigo-400 to-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-4000"></div>
-        </div>
-        <div className="relative z-10 max-w-5xl mx-auto text-center animate-fade-in">
-          <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-6 leading-tight">
-            Customized Consulting Built to <span className="bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-600 bg-clip-text text-transparent">Deliver Outcomes</span>, Not Reports
-          </h1>
-          <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-            We partner with businesses to create strategies that work in practice, not just in theory. Every engagement is designed around <span className="text-blue-600 font-semibold">measurable results</span>.
-          </p>
-          <div className="flex justify-center">
-            <Button
-              size="lg"
-              className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white px-8 py-4 text-base font-semibold rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
-            >
-              <Link to="/contact" className="flex items-center gap-2">
-                Schedule a Consultation
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+    <div>
+      <HeroSection
+        title="Customized Consulting Built to Deliver Outcomes, Not Reports"
+        subtitle="We partner with businesses to create strategies that work in practice, not just in theory. Every engagement is designed around measurable results."
+        ctaText="Schedule a Consultation"
+        ctaLink="/contact"
+      />
 
       {/* Services Overview */}
-      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-100"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">
-              Our Core <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">Services</span>
+            <h2 className={`text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent mb-4 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+              Our Core Services
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            <p className={`text-xl text-gray-600 transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
               Three specialized areas. Unlimited potential for growth.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <div
-                key={index}
-                className="group hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1 border-0 overflow-hidden bg-white rounded-3xl cursor-pointer"
-                onClick={() => scrollToService(service.id)}
-              >
-                <div className="h-1.5 bg-gradient-to-r from-blue-600 to-cyan-500"></div>
-                <CardHeader className="pb-3">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg text-white">
-                    {service.icon}
-                  </div>
-                  <CardTitle className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
-                    {service.title}
-                  </CardTitle>
-                  <CardDescription className="text-sm font-semibold text-blue-600 mb-2">
-                    {service.headline}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <p className="text-gray-600 text-sm leading-relaxed">{service.description}</p>
-                  
-                  <ul className="space-y-2">
-                    {service.bullets.map((bullet, idx) => (
-                      <li key={idx} className="flex items-center text-gray-600 text-sm">
-                        <div className="w-2 h-2 bg-blue-600 rounded-full mr-3 flex-shrink-0"></div>
-                        {bullet}
-                      </li>
-                    ))}
-                  </ul>
-                  
-                  <div className="flex items-center justify-center text-blue-600 font-semibold text-sm pt-2">
-                    Learn More
-                    <ArrowRight className="h-4 w-4 ml-2" />
-                  </div>
-                </CardContent>
-              </div>
+              <Card key={index} className={`relative overflow-hidden hover:shadow-2xl transition-all duration-500 hover:scale-105 group border-0 cursor-pointer ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} 
+                style={{transitionDelay: `${400 + index * 200}ms`}}
+                onClick={() => scrollToService(service.id)}>
+                <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} transition-all duration-500 group-hover:bg-gradient-to-br group-hover:${service.hoverGradient}`}></div>
+                <div className="relative">
+                  <CardHeader className="text-center text-white">
+                    <div className="flex justify-center mb-4">
+                      <div className="p-3 bg-white/20 backdrop-blur-sm rounded-full group-hover:scale-110 transition-transform duration-300">
+                        {service.icon}
+                      </div>
+                    </div>
+                    <CardTitle className="text-2xl mb-2 text-white">{service.title}</CardTitle>
+                    <CardDescription className="text-lg font-semibold text-white/90">
+                      {service.headline}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-6 text-white">
+                    <p className="text-white/80">{service.description}</p>
+                    
+                    <ul className="space-y-3">
+                      {service.bullets.map((bullet, idx) => (
+                        <li key={idx} className="flex items-center text-white/90">
+                          <CheckCircle className="h-5 w-5 text-white mr-3 flex-shrink-0" />
+                          {bullet}
+                        </li>
+                      ))}
+                    </ul>
+                    
+                    <div className="flex items-center justify-center text-white/90 font-semibold">
+                      Learn More
+                      <ArrowRight className="h-4 w-4 ml-2" />
+                    </div>
+                  </CardContent>
+                </div>
+              </Card>
             ))}
           </div>
         </div>
@@ -167,61 +178,58 @@ const Services = () => {
 
       {/* Detailed Service Sections */}
       {services.map((service, index) => (
-        <section key={service.id} id={service.id} className="py-20 bg-white relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-cyan-50/30"></div>
-          <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section key={service.id} id={service.id} className="py-20 relative overflow-hidden">
+          <div className={`absolute inset-0 bg-gradient-to-br ${index % 2 === 0 ? 'from-white via-gray-50 to-blue-50' : 'from-gray-50 via-blue-50 to-indigo-100'}`}></div>
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className={`${index % 2 === 1 ? 'lg:order-2' : ''}`}>
                 <div className="flex items-center mb-6">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 flex items-center justify-center mr-4 text-white">
+                  <div className={`p-4 bg-gradient-to-r ${service.gradient} rounded-full text-white mr-4`}>
                     {service.icon}
                   </div>
-                  <div>
-                    <h2 className="text-3xl md:text-4xl font-black text-gray-900">{service.title}</h2>
-                    <p className="text-blue-600 font-semibold text-lg">{service.headline}</p>
-                  </div>
+                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900">{service.title}</h2>
                 </div>
+                <h3 className="text-2xl font-semibold text-primary mb-4">{service.headline}</h3>
+                <p className="text-lg text-gray-600 mb-6">{service.detailedDescription}</p>
                 
-                <p className="text-lg text-gray-600 mb-8 leading-relaxed">{service.detailedDescription}</p>
-                
-                <div className="space-y-6 mb-8">
-                  <h4 className="text-xl font-bold text-gray-900">Our Process:</h4>
+                <div className="space-y-4 mb-8">
+                  <h4 className="text-xl font-semibold text-gray-900">Our Process:</h4>
                   <ul className="space-y-3">
                     {service.process.map((step, idx) => (
                       <li key={idx} className="flex items-start">
-                        <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                        <CheckCircle className="h-5 w-5 text-primary mr-3 mt-1 flex-shrink-0" />
                         <span className="text-gray-600">{step}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <Button
-                  size="lg"
-                  className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white px-8 py-4 text-base font-semibold rounded-full shadow-xl transform hover:scale-105 transition-all duration-300"
-                >
-                  <Link to="/contact" className="flex items-center gap-2">
+                <Button size="lg" asChild className={`bg-gradient-to-r ${service.gradient} hover:opacity-90 text-white border-0`}>
+                  <Link to="/contact" className="flex items-center">
                     {service.ctaText}
-                    <ArrowRight className="h-4 w-4" />
+                    <ArrowRight className="h-4 w-4 ml-2" />
                   </Link>
                 </Button>
               </div>
               
               <div className={`${index % 2 === 1 ? 'lg:order-1' : ''}`}>
-                <div className="aspect-square bg-gradient-to-br from-blue-500 to-cyan-400 rounded-3xl p-6 transform rotate-3 hover:rotate-6 transition-transform duration-500 shadow-2xl">
-                  <div className="bg-white rounded-2xl h-full flex flex-col items-center justify-center p-8">
-                    <div className="w-20 h-20 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 flex items-center justify-center mb-6 text-white">
-                      {service.icon}
-                    </div>
-                    <h4 className="text-xl font-bold text-gray-900 mb-4 text-center">Key Benefits:</h4>
-                    <ul className="space-y-3 text-center">
+                <div className={`relative p-8 bg-gradient-to-br ${service.gradient} rounded-2xl shadow-2xl`}>
+                  <div className="text-white">
+                    <h4 className="text-xl font-semibold mb-4">Key Benefits:</h4>
+                    <ul className="space-y-3">
                       {service.bullets.map((bullet, idx) => (
-                        <li key={idx} className="flex items-center text-gray-600">
-                          <div className="w-2 h-2 bg-blue-600 rounded-full mr-3 flex-shrink-0"></div>
+                        <li key={idx} className="flex items-center text-white/90">
+                          <Sparkles className="h-5 w-5 text-white mr-3 flex-shrink-0" />
                           {bullet}
                         </li>
                       ))}
                     </ul>
+                    <div className="mt-8 p-4 bg-white/20 backdrop-blur-sm rounded-lg">
+                      <p className="text-sm text-white/80">
+                        "Working with Pontblanc transformed our {service.title.toLowerCase()} approach and delivered measurable results within months."
+                      </p>
+                      <p className="text-xs text-white/60 mt-2">- Client Testimonial</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -231,77 +239,78 @@ const Services = () => {
       ))}
 
       {/* Why Choose Pontblanc */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-600">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
-              Why Choose Pontblanc?
-            </h2>
-            <p className="text-lg text-white/90 max-w-3xl mx-auto">
-              Results-focused consulting that delivers measurable outcomes
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {[
-              {
-                icon: <Target className="h-10 w-10" />,
-                title: "Results-Focused",
-                description: "We measure success by your outcomes, not our deliverables."
-              },
-              {
-                icon: <Users className="h-10 w-10" />,
-                title: "Hands-On Implementation",
-                description: "We don't just advise—we roll up our sleeves and help you execute."
-              },
-              {
-                icon: <Award className="h-10 w-10" />,
-                title: "Rapid Results",
-                description: "See meaningful improvements in weeks, not months."
-              }
-            ].map((benefit, index) => (
-              <Card
-                key={index}
-                className="group hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1 border-0 overflow-hidden bg-white rounded-3xl"
-              >
-                <div className="h-1.5 bg-gradient-to-r from-blue-600 to-cyan-500"></div>
-                <CardHeader className="pb-3">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg text-white">
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary via-blue-700 to-indigo-800"></div>
+        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className={`text-3xl md:text-4xl font-bold text-white mb-8 text-center transition-all duration-1000 delay-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            Why Choose Pontblanc?
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+            {benefits.map((benefit, index) => (
+              <div key={index} className={`text-center transition-all duration-500 delay-${1200 + index * 150} ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                <div className="relative group">
+                  <div className={`absolute inset-0 bg-gradient-to-r ${benefit.gradient} rounded-full opacity-20 group-hover:opacity-30 transition-opacity duration-300 transform scale-150`}></div>
+                  <div className={`relative bg-gradient-to-r ${benefit.gradient} text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                     {benefit.icon}
                   </div>
-                  <CardTitle className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
-                    {benefit.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-sm text-gray-600 leading-relaxed">
-                    {benefit.description}
-                  </CardDescription>
-                </CardContent>
-              </Card>
+                </div>
+                <h3 className="text-xl font-semibold mb-2 text-white">{benefit.title}</h3>
+                <p className="text-gray-200">{benefit.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-20 relative">
+        <div className="absolute inset-0 bg-gradient-to-br from-white via-gray-50 to-blue-50"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className={`text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent mb-4 transition-all duration-1000 delay-1500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+              Proven Track Record
+            </h2>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { number: "150+", label: "Companies Served", icon: <Target className="h-6 w-6" /> },
+              { number: "98%", label: "Client Satisfaction", icon: <Sparkles className="h-6 w-6" /> },
+              { number: "45%", label: "Average Growth", icon: <TrendingUp className="h-6 w-6" /> },
+              { number: "6mo", label: "Average ROI Time", icon: <Zap className="h-6 w-6" /> }
+            ].map((stat, index) => (
+              <div key={index} className={`text-center transition-all duration-500 delay-${1700 + index * 100} ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+                <div className="flex justify-center mb-3">
+                  <div className="p-3 bg-gradient-to-r from-primary to-blue-600 rounded-full text-white shadow-lg">
+                    {stat.icon}
+                  </div>
+                </div>
+                <div className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">{stat.number}</div>
+                <div className="text-gray-600 font-medium">{stat.label}</div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-white text-center">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">
-            Ready to <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">Transform Your Business</span>?
-          </h2>
-          <p className="text-lg text-gray-600 mb-10">
-            Let's discuss which service area will deliver the biggest impact for your company.
-          </p>
-          <Button
-            size="lg"
-            className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white px-10 py-4 text-base font-bold rounded-full shadow-xl transform hover:scale-105 transition-all duration-300"
-          >
-            <Link to="/contact" className="flex items-center gap-3">
-              Schedule Your Free Consultation
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </Button>
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-primary to-blue-700"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className={`transition-all duration-1000 delay-2000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
+              Ready to Transform Your Business?
+            </h2>
+            <p className="text-xl mb-8 text-gray-100">
+              Let's discuss which service area will deliver the biggest impact for your company.
+            </p>
+            <Button size="lg" variant="secondary" asChild className="hover:scale-105 transition-transform duration-300">
+              <Link to="/contact" className="flex items-center">
+                Schedule Your Free Consultation
+                <ArrowRight className="h-4 w-4 ml-2" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
     </div>
