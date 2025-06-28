@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 
 const Services = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [activeService, setActiveService] = useState<string | null>(null);
 
   useEffect(() => {
     setIsVisible(true);
@@ -15,6 +16,7 @@ const Services = () => {
 
   const services = [
     {
+      id: 'strategy',
       icon: <Target className="h-12 w-12 text-white" />,
       title: "Strategy Consulting",
       headline: "Clarity and Direction for Sustainable Growth",
@@ -25,11 +27,18 @@ const Services = () => {
         "Business model design"
       ],
       ctaText: "Get a Strategy Session",
-      ctaLink: "/services/strategy",
       gradient: "from-blue-500 via-blue-600 to-indigo-700",
-      hoverGradient: "from-blue-600 via-indigo-600 to-purple-700"
+      hoverGradient: "from-blue-600 via-indigo-600 to-purple-700",
+      detailedDescription: "Our strategy consulting approach combines proven frameworks with deep industry knowledge to help you navigate complex business challenges. We work alongside your leadership team to develop actionable strategies that drive sustainable growth and competitive advantage.",
+      process: [
+        "Current state assessment and gap analysis",
+        "Market opportunity identification",
+        "Strategic roadmap development",
+        "Implementation planning and support"
+      ]
     },
     {
+      id: 'operations',
       icon: <Settings className="h-12 w-12 text-white" />,
       title: "Operations Consulting",
       headline: "Operational Efficiency That Drives Profit",
@@ -40,11 +49,18 @@ const Services = () => {
         "Cost reduction strategies"
       ],
       ctaText: "Optimize My Operations",
-      ctaLink: "/services/operations",
       gradient: "from-emerald-500 via-green-600 to-teal-700",
-      hoverGradient: "from-emerald-600 via-teal-600 to-cyan-700"
+      hoverGradient: "from-emerald-600 via-teal-600 to-cyan-700",
+      detailedDescription: "Transform your operations from cost centers into profit drivers. Our operations consulting focuses on streamlining processes, optimizing resource allocation, and building systems that scale with your growth.",
+      process: [
+        "Operational audit and bottleneck identification",
+        "Process redesign and optimization",
+        "Team restructuring and role clarification",
+        "Performance metrics and monitoring systems"
+      ]
     },
     {
+      id: 'digital',
       icon: <Zap className="h-12 w-12 text-white" />,
       title: "Digital Transformation",
       headline: "Modernize to Compete and Win",
@@ -55,11 +71,25 @@ const Services = () => {
         "CRM/ERP implementation"
       ],
       ctaText: "Start Your Digital Audit",
-      ctaLink: "/services/digital",
       gradient: "from-purple-500 via-violet-600 to-indigo-700",
-      hoverGradient: "from-purple-600 via-indigo-600 to-blue-700"
+      hoverGradient: "from-purple-600 via-indigo-600 to-blue-700",
+      detailedDescription: "Navigate the digital landscape with confidence. Our digital transformation services help you leverage technology to improve efficiency, enhance customer experience, and create new revenue streams.",
+      process: [
+        "Digital maturity assessment",
+        "Technology stack evaluation",
+        "Implementation roadmap creation",
+        "Change management and training"
+      ]
     }
   ];
+
+  const scrollToService = (serviceId: string) => {
+    const element = document.getElementById(serviceId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setActiveService(serviceId);
+    }
+  };
 
   const benefits = [
     {
@@ -91,7 +121,7 @@ const Services = () => {
         ctaLink="/contact"
       />
 
-      {/* Services Grid */}
+      {/* Services Overview */}
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-100"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -106,7 +136,9 @@ const Services = () => {
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <Card key={index} className={`relative overflow-hidden hover:shadow-2xl transition-all duration-500 hover-scale group border-0 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{transitionDelay: `${400 + index * 200}ms`}}>
+              <Card key={index} className={`relative overflow-hidden hover:shadow-2xl transition-all duration-500 hover:scale-105 group border-0 cursor-pointer ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} 
+                style={{transitionDelay: `${400 + index * 200}ms`}}
+                onClick={() => scrollToService(service.id)}>
                 <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} transition-all duration-500 group-hover:bg-gradient-to-br group-hover:${service.hoverGradient}`}></div>
                 <div className="relative">
                   <CardHeader className="text-center text-white">
@@ -132,12 +164,10 @@ const Services = () => {
                       ))}
                     </ul>
                     
-                    <Button asChild className="w-full bg-white text-gray-900 hover:bg-gray-100 hover-scale">
-                      <Link to={service.ctaLink} className="flex items-center justify-center font-semibold">
-                        {service.ctaText}
-                        <ArrowRight className="h-4 w-4 ml-2" />
-                      </Link>
-                    </Button>
+                    <div className="flex items-center justify-center text-white/90 font-semibold">
+                      Learn More
+                      <ArrowRight className="h-4 w-4 ml-2" />
+                    </div>
                   </CardContent>
                 </div>
               </Card>
@@ -145,6 +175,68 @@ const Services = () => {
           </div>
         </div>
       </section>
+
+      {/* Detailed Service Sections */}
+      {services.map((service, index) => (
+        <section key={service.id} id={service.id} className="py-20 relative overflow-hidden">
+          <div className={`absolute inset-0 bg-gradient-to-br ${index % 2 === 0 ? 'from-white via-gray-50 to-blue-50' : 'from-gray-50 via-blue-50 to-indigo-100'}`}></div>
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div className={`${index % 2 === 1 ? 'lg:order-2' : ''}`}>
+                <div className="flex items-center mb-6">
+                  <div className={`p-4 bg-gradient-to-r ${service.gradient} rounded-full text-white mr-4`}>
+                    {service.icon}
+                  </div>
+                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900">{service.title}</h2>
+                </div>
+                <h3 className="text-2xl font-semibold text-primary mb-4">{service.headline}</h3>
+                <p className="text-lg text-gray-600 mb-6">{service.detailedDescription}</p>
+                
+                <div className="space-y-4 mb-8">
+                  <h4 className="text-xl font-semibold text-gray-900">Our Process:</h4>
+                  <ul className="space-y-3">
+                    {service.process.map((step, idx) => (
+                      <li key={idx} className="flex items-start">
+                        <CheckCircle className="h-5 w-5 text-primary mr-3 mt-1 flex-shrink-0" />
+                        <span className="text-gray-600">{step}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <Button size="lg" asChild className={`bg-gradient-to-r ${service.gradient} hover:opacity-90 text-white border-0`}>
+                  <Link to="/contact" className="flex items-center">
+                    {service.ctaText}
+                    <ArrowRight className="h-4 w-4 ml-2" />
+                  </Link>
+                </Button>
+              </div>
+              
+              <div className={`${index % 2 === 1 ? 'lg:order-1' : ''}`}>
+                <div className={`relative p-8 bg-gradient-to-br ${service.gradient} rounded-2xl shadow-2xl`}>
+                  <div className="text-white">
+                    <h4 className="text-xl font-semibold mb-4">Key Benefits:</h4>
+                    <ul className="space-y-3">
+                      {service.bullets.map((bullet, idx) => (
+                        <li key={idx} className="flex items-center text-white/90">
+                          <Sparkles className="h-5 w-5 text-white mr-3 flex-shrink-0" />
+                          {bullet}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-8 p-4 bg-white/20 backdrop-blur-sm rounded-lg">
+                      <p className="text-sm text-white/80">
+                        "Working with Pontblanc transformed our {service.title.toLowerCase()} approach and delivered measurable results within months."
+                      </p>
+                      <p className="text-xs text-white/60 mt-2">- Client Testimonial</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      ))}
 
       {/* Why Choose Pontblanc */}
       <section className="py-20 relative overflow-hidden">
@@ -212,7 +304,7 @@ const Services = () => {
             <p className="text-xl mb-8 text-gray-100">
               Let's discuss which service area will deliver the biggest impact for your company.
             </p>
-            <Button size="lg" variant="secondary" asChild className="hover-scale">
+            <Button size="lg" variant="secondary" asChild className="hover:scale-105 transition-transform duration-300">
               <Link to="/contact" className="flex items-center">
                 Schedule Your Free Consultation
                 <ArrowRight className="h-4 w-4 ml-2" />
