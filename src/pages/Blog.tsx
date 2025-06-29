@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -170,71 +169,72 @@ const Blog = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {displayedArticles.map((article, index) => (
-              <Card 
-                key={article.id} 
-                className={`group hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 border-0 overflow-hidden bg-white rounded-3xl cursor-pointer ${
-                  article.featured ? 'ring-2 ring-blue-200' : ''
-                }`}
+              <Link 
+                key={article.id}
+                to={`/blog/${article.id}`}
+                className="block"
               >
-                <div className="h-1.5 bg-gradient-to-r from-blue-600 to-cyan-500"></div>
-                <div className="relative overflow-hidden">
-                  <img 
-                    src={article.image} 
-                    alt={article.title}
-                    className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  {article.featured && (
-                    <div className="absolute top-4 left-4">
-                      <Badge className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white border-0">
-                        Featured
+                <Card 
+                  className={`group hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 border-0 overflow-hidden bg-white rounded-3xl cursor-pointer ${
+                    article.featured ? 'ring-2 ring-blue-200' : ''
+                  }`}
+                >
+                  <div className="h-1.5 bg-gradient-to-r from-blue-600 to-cyan-500"></div>
+                  <div className="relative overflow-hidden">
+                    <img 
+                      src={article.image} 
+                      alt={article.title}
+                      className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    {article.featured && (
+                      <div className="absolute top-4 left-4">
+                        <Badge className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white border-0">
+                          Featured
+                        </Badge>
+                      </div>
+                    )}
+                    <div className="absolute top-4 right-4">
+                      <Badge variant="secondary" className="bg-white/90 text-gray-800">
+                        {article.category}
                       </Badge>
-                    </div>
-                  )}
-                  <div className="absolute top-4 right-4">
-                    <Badge variant="secondary" className="bg-white/90 text-gray-800">
-                      {article.category}
-                    </Badge>
-                  </div>
-                </div>
-                
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors leading-tight">
-                    {article.title}
-                  </CardTitle>
-                  <p className="text-gray-600 text-sm leading-relaxed mt-2">
-                    {article.excerpt}
-                  </p>
-                </CardHeader>
-                
-                <CardContent className="pt-0">
-                  <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center gap-1">
-                        <User className="h-4 w-4" />
-                        {article.author}
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Calendar className="h-4 w-4" />
-                        {article.date}
-                      </div>
                     </div>
                   </div>
                   
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center text-gray-500 text-sm">
-                      <Clock className="h-4 w-4 mr-1" />
-                      {article.readTime}
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors leading-tight">
+                      {article.title}
+                    </CardTitle>
+                    <p className="text-gray-600 text-sm leading-relaxed mt-2">
+                      {article.excerpt}
+                    </p>
+                  </CardHeader>
+                  
+                  <CardContent className="pt-0">
+                    <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-1">
+                          <User className="h-4 w-4" />
+                          {article.author}
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Calendar className="h-4 w-4" />
+                          {article.date}
+                        </div>
+                      </div>
                     </div>
-                    <Button 
-                      variant="ghost" 
-                      size="sm"
-                      className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 font-semibold"
-                    >
-                      Read More <ArrowRight className="h-4 w-4 ml-1" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+                    
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center text-gray-500 text-sm">
+                        <Clock className="h-4 w-4 mr-1" />
+                        {article.readTime}
+                      </div>
+                      <span className="text-blue-600 hover:text-blue-700 font-semibold text-sm">
+                        Read More <ArrowRight className="h-4 w-4 ml-1 inline" />
+                      </span>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </div>
 
