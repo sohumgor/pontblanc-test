@@ -5,7 +5,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import HeroSection from '@/components/ui/hero-section';
 import { Mail, Phone, Linkedin, Twitter } from 'lucide-react';
 
 const Contact = () => {
@@ -16,7 +15,7 @@ const Contact = () => {
     projectOverview: ''
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEventFormsInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -30,30 +29,46 @@ const Contact = () => {
   };
 
   return (
-    <div>
-      <HeroSection
-        title="Let's Talk About Your Growth Goals"
-        subtitle="Ready to transform your business? Schedule a free discovery call to discuss how we can help you achieve breakthrough results."
-        ctaText="Book a Free Discovery Call"
-        ctaLink="#contact-form"
-      />
+    <div className="overflow-hidden">
+      {/* Hero Section */}
+      <section className="relative min-h-[45vh] flex items-center justify-center bg-gradient-to-br from-white via-blue-50 to-cyan-50 px-6">
+        <div className="max-w-4xl text-center animate-fade-in">
+          <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-4 leading-tight">
+            Let's Talk About Your <span className="bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-600 bg-clip-text text-transparent">Growth Goals</span>
+          </h1>
+          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8">
+            Ready to transform your business? Schedule a free discovery call to discuss how we can help you achieve breakthrough results.
+          </p>
+          <Button
+            size="lg"
+            className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white px-10 py-5 text-lg font-semibold rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+            onClick={() => {
+              const formSection = document.getElementById('contact-form');
+              formSection?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          >
+            Book a Free Discovery Call
+          </Button>
+        </div>
+      </section>
 
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      {/* Contact Form and Info Section */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Contact Form */}
             <div id="contact-form">
-              <Card>
+              <Card className="rounded-3xl shadow-lg border-0">
                 <CardHeader>
-                  <CardTitle className="text-2xl">Get Started Today</CardTitle>
-                  <CardDescription>
+                  <CardTitle className="text-3xl font-extrabold text-gray-900">Get Started Today</CardTitle>
+                  <CardDescription className="text-gray-700 text-lg max-w-xl">
                     Fill out the form below and we'll get back to you within 24 hours to schedule your free consultation.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-8">
                     <div>
-                      <Label htmlFor="name">Full Name *</Label>
+                      <Label htmlFor="name" className="font-semibold text-gray-800 mb-2 block">Full Name *</Label>
                       <Input
                         id="name"
                         name="name"
@@ -62,11 +77,12 @@ const Contact = () => {
                         value={formData.name}
                         onChange={handleInputChange}
                         placeholder="Your full name"
+                        className="rounded-xl"
                       />
                     </div>
-                    
+
                     <div>
-                      <Label htmlFor="email">Email Address *</Label>
+                      <Label htmlFor="email" className="font-semibold text-gray-800 mb-2 block">Email Address *</Label>
                       <Input
                         id="email"
                         name="email"
@@ -75,11 +91,12 @@ const Contact = () => {
                         value={formData.email}
                         onChange={handleInputChange}
                         placeholder="your@email.com"
+                        className="rounded-xl"
                       />
                     </div>
-                    
+
                     <div>
-                      <Label htmlFor="company">Company Name *</Label>
+                      <Label htmlFor="company" className="font-semibold text-gray-800 mb-2 block">Company Name *</Label>
                       <Input
                         id="company"
                         name="company"
@@ -88,11 +105,12 @@ const Contact = () => {
                         value={formData.company}
                         onChange={handleInputChange}
                         placeholder="Your company name"
+                        className="rounded-xl"
                       />
                     </div>
-                    
+
                     <div>
-                      <Label htmlFor="projectOverview">Project Overview *</Label>
+                      <Label htmlFor="projectOverview" className="font-semibold text-gray-800 mb-2 block">Project Overview *</Label>
                       <Textarea
                         id="projectOverview"
                         name="projectOverview"
@@ -100,11 +118,16 @@ const Contact = () => {
                         value={formData.projectOverview}
                         onChange={handleInputChange}
                         placeholder="Tell us about your business challenges and goals..."
-                        rows={4}
+                        rows={5}
+                        className="rounded-xl"
                       />
                     </div>
-                    
-                    <Button type="submit" className="w-full" size="lg">
+
+                    <Button
+                      type="submit"
+                      size="lg"
+                      className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 font-semibold py-5"
+                    >
                       Send Message & Schedule Call
                     </Button>
                   </form>
@@ -113,77 +136,77 @@ const Contact = () => {
             </div>
 
             {/* Contact Information */}
-            <div className="space-y-8">
+            <div className="space-y-12">
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h2>
-                <div className="space-y-4">
-                  <div className="flex items-center">
-                    <Mail className="h-5 w-5 text-primary mr-3" />
-                    <span>hello@pontblanc.com</span>
+                <h2 className="text-3xl font-extrabold text-gray-900 mb-6">Get in Touch</h2>
+                <div className="space-y-6 text-gray-700 text-lg">
+                  <div className="flex items-center gap-4">
+                    <Mail className="h-6 w-6 text-blue-600" />
+                    <a href="mailto:hello@pontblanc.com" className="hover:text-blue-600 transition-colors">
+                      hello@pontblanc.com
+                    </a>
                   </div>
-                  <div className="flex items-center">
-                    <Phone className="h-5 w-5 text-primary mr-3" />
-                    <span>+1 (555) 123-4567</span>
+                  <div className="flex items-center gap-4">
+                    <Phone className="h-6 w-6 text-blue-600" />
+                    <a href="tel:+15551234567" className="hover:text-blue-600 transition-colors">
+                      +1 (555) 123-4567
+                    </a>
                   </div>
                 </div>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Follow Us</h3>
-                <div className="flex space-x-4">
-                  <a href="#" className="text-gray-400 hover:text-primary transition-colors">
-                    <Linkedin size={24} />
+                <h3 className="text-xl font-semibold text-gray-900 mb-5">Follow Us</h3>
+                <div className="flex space-x-6">
+                  <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors" aria-label="LinkedIn">
+                    <Linkedin size={28} />
                   </a>
-                  <a href="#" className="text-gray-400 hover:text-primary transition-colors">
-                    <Twitter size={24} />
+                  <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors" aria-label="Twitter">
+                    <Twitter size={28} />
                   </a>
                 </div>
               </div>
 
-              <Card>
+              <Card className="rounded-3xl shadow-md border-0 bg-white">
                 <CardHeader>
-                  <CardTitle>What Happens Next?</CardTitle>
+                  <CardTitle className="text-xl font-bold">What Happens Next?</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3">
-                        1
+                  <div className="space-y-6 text-gray-700">
+                    {[{
+                      step: '1',
+                      title: 'Free Discovery Call',
+                      desc: "We'll discuss your challenges and goals (30 minutes)"
+                    }, {
+                      step: '2',
+                      title: 'Custom Proposal',
+                      desc: "We'll create a tailored solution for your needs"
+                    }, {
+                      step: '3',
+                      title: 'Start Execution',
+                      desc: "Begin implementing solutions and tracking results"
+                    }].map(({ step, title, desc }) => (
+                      <div key={step} className="flex items-start gap-4">
+                        <div className="flex-shrink-0 w-9 h-9 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg">
+                          {step}
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-gray-900">{title}</h4>
+                          <p className="text-sm">{desc}</p>
+                        </div>
                       </div>
-                      <div>
-                        <h4 className="font-semibold">Free Discovery Call</h4>
-                        <p className="text-gray-600 text-sm">We'll discuss your challenges and goals (30 minutes)</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3">
-                        2
-                      </div>
-                      <div>
-                        <h4 className="font-semibold">Custom Proposal</h4>
-                        <p className="text-gray-600 text-sm">We'll create a tailored solution for your needs</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3">
-                        3
-                      </div>
-                      <div>
-                        <h4 className="font-semibold">Start Execution</h4>
-                        <p className="text-gray-600 text-sm">Begin implementing solutions and tracking results</p>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="bg-gray-50">
+              <Card className="rounded-3xl shadow-md border-0 bg-gray-50">
                 <CardContent className="p-6">
-                  <h3 className="font-semibold mb-2">Schedule Directly</h3>
-                  <p className="text-gray-600 text-sm mb-4">
+                  <h3 className="font-semibold mb-3 text-gray-900">Schedule Directly</h3>
+                  <p className="text-gray-700 mb-5 text-sm">
                     Prefer to book a time that works for you? Use our calendar to schedule your free consultation.
                   </p>
-                  <Button variant="outline" className="w-full">
+                  <Button variant="outline" className="w-full rounded-full py-4 font-semibold hover:bg-blue-600 hover:text-white transition-all duration-300">
                     View Available Times
                   </Button>
                 </CardContent>
