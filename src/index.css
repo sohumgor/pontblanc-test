@@ -148,3 +148,46 @@
 .backdrop-blur-lg {
   backdrop-filter: blur(16px);
 }
+
+/* Mobile-specific optimizations for all pages */
+@media (max-width: 640px) {
+  /* Reduce overall spacing on mobile */
+  .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  
+  /* Scale down large text elements on mobile */
+  h1 {
+    line-height: 1.1;
+  }
+  
+  h2 {
+    line-height: 1.2;
+  }
+  
+  /* Improve touch targets on mobile */
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Optimize card layouts for mobile */
+  .card {
+    border-radius: 1rem;
+  }
+  
+  /* Better mobile form inputs */
+  input, textarea, select {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 641px) and (max-width: 1024px) {
+  /* Balanced scaling for tablet devices */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
