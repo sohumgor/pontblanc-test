@@ -1,5 +1,5 @@
-
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -8,6 +8,10 @@ import { ArrowLeft, Clock, Calendar, User, Share2, BookOpen } from 'lucide-react
 const BlogArticle = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
 
   // Sample article data - in a real app, this would come from an API
   const allArticles = [
@@ -111,10 +115,10 @@ const BlogArticle = () => {
   
   if (!article) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="text-center px-6">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Article Not Found</h1>
-          <Button onClick={() => navigate('/blog')} className="bg-gradient-to-r from-blue-600 to-cyan-500">
+          <Button onClick={() => navigate('/blog')} className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white hover:from-blue-700 hover:to-cyan-600">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Blog
           </Button>
@@ -129,9 +133,9 @@ const BlogArticle = () => {
     .slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-cyan-50">
+    <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-cyan-50 animate-fade-in">
       {/* Header */}
-      <div className="bg-white shadow-sm sticky top-0 z-10">
+      <div className="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <Button 
@@ -151,41 +155,43 @@ const BlogArticle = () => {
       </div>
 
       {/* Article Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Article Header */}
         <header className="mb-12 text-center">
           <div className="flex justify-center mb-4">
-            <Badge className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white">
+            <Badge className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-3 py-1">
               {article.category}
             </Badge>
           </div>
           
-          <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-6 leading-tight">
-            {article.title}
+          <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-6 leading-tight tracking-tight">
+            <span className="bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-600 bg-clip-text text-transparent">
+              {article.title}
+            </span>
           </h1>
           
-          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
             {article.excerpt}
           </p>
           
           <div className="flex items-center justify-center gap-6 text-sm text-gray-500">
             <div className="flex items-center gap-1">
               <User className="h-4 w-4" />
-              <span>{article.author}</span>
+              {article.author}
             </div>
             <div className="flex items-center gap-1">
               <Calendar className="h-4 w-4" />
-              <span>{article.date}</span>
+              {article.date}
             </div>
             <div className="flex items-center gap-1">
               <Clock className="h-4 w-4" />
-              <span>{article.readTime}</span>
+              {article.readTime}
             </div>
           </div>
         </header>
 
         {/* Featured Image */}
-        <div className="mb-12 rounded-3xl overflow-hidden shadow-2xl">
+        <div className="mb-12 rounded-3xl overflow-hidden shadow-xl">
           <img 
             src={article.image} 
             alt={article.title}
@@ -195,7 +201,7 @@ const BlogArticle = () => {
 
         {/* Article Body */}
         <div 
-          className="prose prose-lg max-w-none mb-16 text-gray-800 leading-relaxed"
+          className="prose prose-lg max-w-none mb-20 text-gray-800 leading-relaxed prose-blue"
           dangerouslySetInnerHTML={{ __html: article.content }}
           style={{
             lineHeight: '1.8',
@@ -204,9 +210,9 @@ const BlogArticle = () => {
 
         {/* Related Articles */}
         {relatedArticles.length > 0 && (
-          <section className="border-t border-gray-200 pt-16">
+          <section className="pt-12 border-t border-gray-200">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-black text-gray-900 mb-4 flex items-center justify-center gap-2">
+              <h2 className="text-3xl font-black text-gray-900 flex items-center justify-center gap-2">
                 <BookOpen className="h-8 w-8 text-blue-600" />
                 Related Articles
               </h2>
@@ -220,7 +226,7 @@ const BlogArticle = () => {
                   className="group hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 border-0 overflow-hidden bg-white rounded-3xl cursor-pointer"
                   onClick={() => navigate(`/blog/${relatedArticle.id}`)}
                 >
-                  <div className="h-1 bg-gradient-to-r from-blue-600 to-cyan-500"></div>
+                  <div className="h-1.5 bg-gradient-to-r from-blue-600 to-cyan-500" />
                   <div className="relative overflow-hidden">
                     <img 
                       src={relatedArticle.image} 
@@ -230,7 +236,7 @@ const BlogArticle = () => {
                   </div>
                   
                   <CardHeader className="pb-3">
-                    <CardTitle className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors leading-tight">
+                    <CardTitle className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
                       {relatedArticle.title}
                     </CardTitle>
                   </CardHeader>
@@ -241,7 +247,9 @@ const BlogArticle = () => {
                         <Clock className="h-3 w-3" />
                         {relatedArticle.readTime}
                       </div>
-                      <span className="text-blue-600 font-semibold">Read More →</span>
+                      <span className="text-blue-600 font-semibold">
+                        Read More →
+                      </span>
                     </div>
                   </CardContent>
                 </Card>
