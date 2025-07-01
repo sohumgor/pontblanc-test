@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -21,10 +22,15 @@ const Header = () => {
   const handleNavClick = (path: string) => {
     if (location.pathname === path) {
       navigate(path, { replace: true });
-      window.scrollTo({ top: 0, behavior: 'auto' }); // Changed from 'smooth' to 'auto'
+      window.scrollTo({ top: 0, behavior: 'auto' });
     } else {
       navigate(path);
     }
+  };
+
+  const handleMobileNavClick = (path: string) => {
+    setIsMenuOpen(false);
+    handleNavClick(path);
   };
 
   const navLinkClasses = `px-2 py-2 text-sm font-medium transition-all duration-200
@@ -33,13 +39,16 @@ const Header = () => {
 
   const activeLinkClasses = 'text-blue-600 bg-gray-100 shadow-md scale-[1.03]';
 
+  const mobileNavLinkClasses = `block px-4 py-3 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-200 mx-2`;
+  const activeMobileLinkClasses = 'text-blue-600 bg-blue-50 font-semibold';
+
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center">
-            <span className="text-2xl font-bold text-primary">PontBlanc</span>
+          <Link to="/" className="flex items-center" onClick={() => setIsMenuOpen(false)}>
+            <span className="text-xl sm:text-2xl font-bold text-primary">PontBlanc</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -109,32 +118,74 @@ const Header = () => {
           </Button>
 
           {/* Mobile Menu Button */}
-          <button className="lg:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          <button 
+            className="lg:hidden p-2 rounded-xl hover:bg-gray-100 transition-colors duration-200" 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? (
+              <X size={24} className="text-gray-700" />
+            ) : (
+              <Menu size={24} className="text-gray-700" />
+            )}
           </button>
         </div>
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="lg:hidden py-4 border-t">
+          <div className="lg:hidden py-6 border-t border-gray-100 bg-white/95 backdrop-blur-sm rounded-b-2xl shadow-lg">
             <div className="space-y-2">
-              <Link to="/" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Home</Link>
-              <Link to="/about" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">About</Link>
-              <Link to="/services" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Services</Link>
-              <Link to="/services/strategy" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">- Strategy</Link>
-              <Link to="/services/operations" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">- Operations</Link>
-              <Link to="/services/digital" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">- Digital</Link>
-              <Link to="/industries" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Industries</Link>
-              <Link to="/industries/startups" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">- Startups</Link>
-              <Link to="/industries/manufacturing" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">- Manufacturing</Link>
-              <Link to="/industries/healthcare" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">- Healthcare</Link>
-              <Link to="/industries/nonprofits" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">- Nonprofits</Link>
-              <Link to="/case-studies" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Case Studies</Link>
-              <Link to="/blog" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Blog</Link>
-              <Link to="/contact" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Contact</Link>
-              <Button asChild className="w-full mt-4">
-                <Link to="/contact">Book a Free Consultation</Link>
-              </Button>
+              <button
+                onClick={() => handleMobileNavClick('/')}
+                className={`${mobileNavLinkClasses} ${isActive('/') ? activeMobileLinkClasses : ''} w-full text-left`}
+              >
+                Home
+              </button>
+              <button
+                onClick={() => handleMobileNavClick('/about')}
+                className={`${mobileNavLinkClasses} ${isActive('/about') ? activeMobileLinkClasses : ''} w-full text-left`}
+              >
+                About
+              </button>
+              <button
+                onClick={() => handleMobileNavClick('/services')}
+                className={`${mobileNavLinkClasses} ${isActive('/services') ? activeMobileLinkClasses : ''} w-full text-left`}
+              >
+                Services
+              </button>
+              <button
+                onClick={() => handleMobileNavClick('/industries')}
+                className={`${mobileNavLinkClasses} ${isActive('/industries') ? activeMobileLinkClasses : ''} w-full text-left`}
+              >
+                Industries
+              </button>
+              <button
+                onClick={() => handleMobileNavClick('/case-studies')}
+                className={`${mobileNavLinkClasses} ${isActive('/case-studies') ? activeMobileLinkClasses : ''} w-full text-left`}
+              >
+                Case Studies
+              </button>
+              <button
+                onClick={() => handleMobileNavClick('/blog')}
+                className={`${mobileNavLinkClasses} ${isActive('/blog') ? activeMobileLinkClasses : ''} w-full text-left`}
+              >
+                Blog
+              </button>
+              <button
+                onClick={() => handleMobileNavClick('/contact')}
+                className={`${mobileNavLinkClasses} ${isActive('/contact') ? activeMobileLinkClasses : ''} w-full text-left`}
+              >
+                Contact
+              </button>
+              
+              <div className="pt-4 px-2">
+                <Button 
+                  asChild 
+                  className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white rounded-xl py-3 text-base font-semibold shadow-lg"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <Link to="/contact">Book a Free Consultation</Link>
+                </Button>
+              </div>
             </div>
           </div>
         )}

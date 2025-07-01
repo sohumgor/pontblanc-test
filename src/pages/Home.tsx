@@ -1,154 +1,153 @@
 
-import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { CheckCircle, TrendingUp, Settings, Zap, ArrowRight, Star, Users, Target, Rocket } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Link } from 'react-router-dom';
+import { ArrowRight, CheckCircle, Target, Users, TrendingUp, Star, Zap, Shield } from 'lucide-react';
 
 const Home = () => {
   const services = [
     {
-      icon: <TrendingUp className="h-12 w-12 text-white" />,
+      icon: <Target className="h-8 w-8 sm:h-10 sm:w-10" />,
       title: "Strategy Consulting",
-      description: "Strategic planning and business model design for exponential growth and market leadership.",
-      gradient: "from-blue-500 to-cyan-400"
+      description: "Clear direction and actionable roadmaps for sustainable growth",
+      gradient: "from-blue-500 to-indigo-600"
     },
     {
-      icon: <Settings className="h-12 w-12 text-white" />,
-      title: "Operational Excellence",
-      description: "Process optimization and efficiency transformation to drive measurable results and ROI.",
-      gradient: "from-cyan-400 to-blue-500"
+      icon: <Zap className="h-8 w-8 sm:h-10 sm:w-10" />,
+      title: "Operations Excellence",
+      description: "Streamlined processes that boost efficiency and reduce costs",
+      gradient: "from-emerald-500 to-teal-600"
     },
     {
-      icon: <Zap className="h-12 w-12 text-white" />,
+      icon: <Shield className="h-8 w-8 sm:h-10 sm:w-10" />,
       title: "Digital Transformation",
-      description: "Technology strategy and digital modernization for competitive advantage in the digital age.",
-      gradient: "from-blue-600 to-indigo-500"
+      description: "Modern solutions that future-proof your business",
+      gradient: "from-purple-500 to-violet-600"
     }
   ];
 
   const stats = [
-    { number: "300%", label: "Average Growth" },
-    { number: "50+", label: "Companies Transformed" },
-    { number: "98%", label: "Client Satisfaction" },
-    { number: "24mo", label: "Average Partnership" }
+    { number: "150+", label: "Companies Transformed" },
+    { number: "95%", label: "Client Satisfaction" },
+    { number: "$50M+", label: "Value Created" },
+    { number: "24hrs", label: "Response Time" }
   ];
 
   const testimonials = [
     {
-      quote: "Pontblanc didn't just consult - they became part of our team and transformed our entire business model. The results speak for themselves: 300% growth in 8 months.",
-      author: "Sarah Johnson",
-      title: "CEO & Founder",
-      company: "TechStart Inc.",
-      rating: 5
+      quote: "PontBlanc didn't just give us a strategy—they helped us execute it. Revenue increased 40% in 6 months.",
+      author: "Sarah Chen",
+      title: "CEO, TechFlow Solutions",
+      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80"
     },
     {
-      quote: "Their strategic guidance and operational expertise saved us from making costly mistakes. They turned our vision into a profitable reality.",
-      author: "Michael Chen",
-      title: "Founder",
-      company: "GrowthCorp",
-      rating: 5
+      quote: "Their operational expertise transformed our manufacturing processes. We cut costs by 25% while improving quality.",
+      author: "Michael Rodriguez",
+      title: "COO, Industrial Dynamics",
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80"
     },
     {
-      quote: "The digital transformation roadmap they created for us was game-changing. We went from struggling with legacy systems to leading our industry in innovation.",
-      author: "Emily Rodriguez",
-      title: "COO",
-      company: "InnovateLab",
-      rating: 5
+      quote: "The digital transformation roadmap they created is exactly what we needed. Implementation was seamless.",
+      author: "Lisa Park",
+      title: "CTO, FinanceFirst",
+      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80"
     }
   ];
 
   return (
     <div className="overflow-hidden">
-      {/* Hero Section - Bright and modern */}
-      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-white via-blue-50 to-cyan-50">
-        {/* Animated background elements */}
+      {/* Hero Section */}
+      <section className="relative min-h-[75vh] sm:min-h-[85vh] flex items-center justify-center bg-gradient-to-br from-white via-blue-50 to-cyan-50 px-4 sm:px-6">
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-blue-400 to-cyan-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse"></div>
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse animation-delay-2000"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-r from-indigo-400 to-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-4000"></div>
+          <div className="absolute -top-20 sm:-top-40 -right-20 sm:-right-40 w-40 h-40 sm:w-72 sm:h-72 bg-gradient-to-r from-blue-400 to-cyan-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse"></div>
+          <div className="absolute -bottom-20 sm:-bottom-40 -left-20 sm:-left-40 w-40 h-40 sm:w-72 sm:h-72 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse animation-delay-2000"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 sm:w-72 sm:h-72 bg-gradient-to-r from-indigo-400 to-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-4000"></div>
         </div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="animate-fade-in">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 mb-8 leading-tight">
-              Strategy Meets
-              <span className="bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-600 bg-clip-text text-transparent">
-                {" "}Execution
-              </span>
-            </h1>
-            <p className="text-xl md:text-2xl lg:text-3xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed">
-              We don't just deliver recommendations. We partner with you to execute strategies that deliver 
-              <span className="text-blue-600 font-semibold"> measurable results</span>.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white px-8 py-6 text-lg font-semibold rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
-                <Link to="/contact" className="flex items-center gap-2">
-                  Book Free Strategy Call
-                  <ArrowRight className="h-5 w-5" />
-                </Link>
-              </Button>
-              <Button variant="outline" size="lg" className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-6 text-lg font-semibold rounded-full transition-all duration-300">
-                <Link to="/case-studies">View Success Stories</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-blue-600 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-blue-600 rounded-full mt-2 animate-pulse"></div>
+        <div className="relative z-10 max-w-5xl mx-auto text-center animate-fade-in">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-4 sm:mb-6 leading-tight">
+            Strategic Consulting That
+            <span className="block bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-600 bg-clip-text text-transparent">
+              Drives Results
+            </span>
+          </h1>
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-4">
+            We help businesses achieve breakthrough growth through strategic clarity, operational excellence, and digital transformation.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4">
+            <Button 
+              asChild 
+              size="lg" 
+              className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+            >
+              <Link to="/contact">Book a Free Consultation</Link>
+            </Button>
+            <Button 
+              asChild 
+              variant="outline" 
+              size="lg" 
+              className="w-full sm:w-auto border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold rounded-full transition-all duration-300"
+            >
+              <Link to="/services">Explore Services</Link>
+            </Button>
           </div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-white">
+      <section className="py-12 sm:py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {stats.map((stat, index) => (
-              <div key={index} className="text-center group">
-                <div className="text-4xl md:text-5xl font-black bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300">
+              <div key={index} className="text-center">
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-blue-600 mb-1 sm:mb-2">
                   {stat.number}
                 </div>
-                <div className="text-gray-600 font-medium">{stat.label}</div>
+                <div className="text-sm sm:text-base text-gray-600 font-medium">
+                  {stat.label}
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Services Section - Bright and clean */}
-      <section className="py-32 bg-gradient-to-br from-gray-50 to-blue-50">
+      {/* Services Section */}
+      <section className="py-16 sm:py-20 bg-gradient-to-br from-gray-50 to-blue-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-6xl font-black text-gray-900 mb-6">
-              What We <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">Deliver</span>
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 mb-3 sm:mb-4">
+              Our <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">Core Services</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Three core competencies. Infinite possibilities. Measurable outcomes.
+            <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto px-4">
+              Three specialized areas. Unlimited potential for growth.
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {services.map((service, index) => (
-              <Card key={index} className="group hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border-0 overflow-hidden bg-white">
-                <div className={`h-2 bg-gradient-to-r ${service.gradient}`}></div>
-                <CardHeader className="pb-4">
-                  <div className={`w-20 h-20 rounded-2xl bg-gradient-to-r ${service.gradient} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                    {service.icon}
+              <Card key={index} className="group hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 border-0 overflow-hidden bg-white rounded-3xl">
+                <div className="h-1.5 bg-gradient-to-r from-blue-600 to-cyan-500"></div>
+                <CardHeader className="text-center pb-3 sm:pb-4">
+                  <div className="flex justify-center mb-3 sm:mb-4">
+                    <div className={`p-3 sm:p-4 rounded-full bg-gradient-to-r ${service.gradient} text-white group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                      {service.icon}
+                    </div>
                   </div>
-                  <CardTitle className="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                  <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-2">
                     {service.title}
                   </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-base text-gray-600 leading-relaxed">
+                  <CardDescription className="text-sm sm:text-base text-gray-600 leading-relaxed px-2">
                     {service.description}
                   </CardDescription>
+                </CardHeader>
+                <CardContent className="text-center pt-0 pb-6">
+                  <Button asChild variant="ghost" className="text-blue-600 hover:text-blue-700 font-semibold group-hover:bg-blue-50">
+                    <Link to="/services" className="flex items-center justify-center gap-2">
+                      Learn More
+                      <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </Button>
                 </CardContent>
               </Card>
             ))}
@@ -156,136 +155,113 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Why Pontblanc - Clean white with blue accents */}
-      <section className="py-32 bg-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-50/50 to-cyan-50/50"></div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="text-5xl md:text-6xl font-black mb-8 text-gray-900">
-                Why <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">Pontblanc</span>?
-              </h2>
-              <p className="text-2xl text-gray-600 mb-12 leading-relaxed">
-                We're not just advisors. We're execution partners who get results.
-              </p>
-              
-              <div className="space-y-8">
-                {[
-                  { icon: <Target className="h-8 w-8" />, title: "Results-Driven Approach", desc: "We focus on measurable outcomes, not just pretty presentations." },
-                  { icon: <Users className="h-8 w-8" />, title: "Ex-Operator Team", desc: "Real entrepreneurs who've built, scaled, and sold businesses." },
-                  { icon: <Rocket className="h-8 w-8" />, title: "Rapid Implementation", desc: "From strategy to execution in weeks, not months." }
-                ].map((item, index) => (
-                  <div key={index} className="flex items-start group">
-                    <div className="bg-gradient-to-r from-blue-500 to-cyan-400 p-3 rounded-xl mr-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                      {item.icon}
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold mb-2 group-hover:text-blue-600 transition-colors text-gray-900">{item.title}</h3>
-                      <p className="text-gray-600">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            <div className="relative">
-              <div className="aspect-square bg-gradient-to-br from-blue-500 to-cyan-400 rounded-3xl p-8 transform rotate-3 hover:rotate-6 transition-transform duration-500 shadow-2xl">
-                <div className="bg-white rounded-2xl h-full flex items-center justify-center">
-                  <div className="text-center text-gray-900">
-                    <div className="text-6xl font-black mb-4 bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">98%</div>
-                    <div className="text-lg font-semibold">Client Success Rate</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials - Clean white background */}
-      <section className="py-32 bg-gradient-to-br from-white to-blue-50">
+      {/* Why Choose Us Section */}
+      <section className="py-16 sm:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-6xl font-black text-gray-900 mb-6">
-              Client <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">Success</span>
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 mb-3 sm:mb-4">
+              Why Choose <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">PontBlanc</span>?
             </h2>
-            <p className="text-xl text-gray-600">Real partnerships. Real results. Real testimonials.</p>
+            <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto px-4">
+              We're not just consultants—we're execution partners committed to your success.
+            </p>
           </div>
-          
-          <Carousel className="max-w-5xl mx-auto">
-            <CarouselContent>
-              {testimonials.map((testimonial, index) => (
-                <CarouselItem key={index}>
-                  <Card className="border-0 shadow-2xl bg-white">
-                    <CardContent className="p-12 text-center">
-                      <div className="flex justify-center mb-6">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <Star key={i} className="h-6 w-6 text-yellow-400 fill-current" />
-                        ))}
-                      </div>
-                      <blockquote className="text-2xl italic text-gray-700 mb-8 leading-relaxed">
-                        "{testimonial.quote}"
-                      </blockquote>
-                      <div className="border-t pt-8">
-                        <div className="font-bold text-xl text-gray-900">{testimonial.author}</div>
-                        <div className="text-blue-600 font-semibold">{testimonial.title}</div>
-                        <div className="text-gray-500">{testimonial.company}</div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </div>
-      </section>
 
-      {/* Lead Magnet - Bright gradient */}
-      <section className="py-32 bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-600">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-          <h2 className="text-5xl md:text-6xl font-black mb-6">
-            Free Strategy Audit
-          </h2>
-          <p className="text-2xl mb-12 opacity-90">
-            Get our proven framework to identify 7-figure growth opportunities in your business.
-          </p>
-          <Card className="max-w-md mx-auto bg-white/10 backdrop-blur-lg border-0 shadow-2xl">
-            <CardContent className="p-8">
-              <div className="space-y-6">
-                <div>
-                  <Label htmlFor="email" className="text-white font-semibold">Email Address</Label>
-                  <Input id="email" type="email" placeholder="your@email.com" className="bg-white/20 border-white/30 text-white placeholder:text-white/70" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            {[
+              {
+                icon: <Target className="h-8 w-8 sm:h-10 sm:w-10 text-blue-600" />,
+                title: "Results-Focused",
+                description: "We measure success by your outcomes, not our deliverables."
+              },
+              {
+                icon: <Users className="h-8 w-8 sm:h-10 sm:w-10 text-emerald-600" />,
+                title: "Hands-On Implementation",
+                description: "We don't just advise—we roll up our sleeves and help you execute."
+              },
+              {
+                icon: <TrendingUp className="h-8 w-8 sm:h-10 sm:w-10 text-purple-600" />,
+                title: "Rapid Results",
+                description: "See meaningful improvements in weeks, not months."
+              }
+            ].map((benefit, index) => (
+              <div key={index} className="text-center p-4 sm:p-6 rounded-2xl hover:bg-gray-50 transition-colors duration-300">
+                <div className="flex justify-center mb-3 sm:mb-4">
+                  {benefit.icon}
                 </div>
-                <div>
-                  <Label htmlFor="company" className="text-white font-semibold">Company Name</Label>
-                  <Input id="company" type="text" placeholder="Your Company" className="bg-white/20 border-white/30 text-white placeholder:text-white/70" />
-                </div>
-                <Button className="w-full bg-white text-blue-600 hover:bg-gray-100 font-bold py-4 text-lg rounded-full transform hover:scale-105 transition-all duration-300 shadow-lg">
-                  Download Free Audit
-                </Button>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
+                  {benefit.title}
+                </h3>
+                <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                  {benefit.description}
+                </p>
               </div>
-            </CardContent>
-          </Card>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Final CTA - Clean white with blue gradient text */}
-      <section className="py-32 bg-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-cyan-50/30"></div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-6xl md:text-7xl font-black mb-8 text-gray-900">
-            Ready to <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">Scale</span>?
+      {/* Testimonials Section */}
+      <section className="py-16 sm:py-20 bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-600">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mb-3 sm:mb-4">
+              What Our Clients Say
+            </h2>
+            <p className="text-base sm:text-lg lg:text-xl text-white/90 max-w-3xl mx-auto px-4">
+              Real results from real partnerships
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            {testimonials.map((testimonial, index) => (
+              <Card key={index} className="bg-white/10 backdrop-blur-sm border-0 text-white rounded-3xl hover:bg-white/20 transition-all duration-300">
+                <CardContent className="p-4 sm:p-6">
+                  <div className="flex mb-3 sm:mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-400 fill-current" />
+                    ))}
+                  </div>
+                  <p className="text-sm sm:text-base text-white/90 mb-4 sm:mb-6 leading-relaxed">
+                    "{testimonial.quote}"
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <img 
+                      src={testimonial.image} 
+                      alt={testimonial.author}
+                      className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover"
+                    />
+                    <div>
+                      <div className="font-semibold text-sm sm:text-base text-white">
+                        {testimonial.author}
+                      </div>
+                      <div className="text-xs sm:text-sm text-white/70">
+                        {testimonial.title}
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 sm:py-20 bg-white text-center">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 mb-3 sm:mb-4">
+            Ready to <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">Transform Your Business</span>?
           </h2>
-          <p className="text-2xl mb-12 text-gray-600 max-w-3xl mx-auto">
-            Stop planning. Start executing. Book your free strategy call and discover how we can 3x your business in the next 12 months.
+          <p className="text-base sm:text-lg lg:text-xl text-gray-600 mb-6 sm:mb-8 px-4">
+            Let's discuss how we can help you achieve breakthrough results. Book your free consultation today.
           </p>
-          <Button size="lg" className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white px-12 py-6 text-xl font-bold rounded-full shadow-2xl transform hover:scale-110 transition-all duration-300">
-            <Link to="/contact" className="flex items-center gap-3">
-              Book Your Strategy Call Now
-              <ArrowRight className="h-6 w-6" />
-            </Link>
+          <Button 
+            asChild 
+            size="lg" 
+            className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white px-8 sm:px-10 py-3 sm:py-4 text-base sm:text-lg font-bold rounded-full shadow-xl transform hover:scale-105 transition-all duration-300"
+          >
+            <Link to="/contact">Get Started Today</Link>
           </Button>
         </div>
       </section>
