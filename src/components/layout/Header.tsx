@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -20,10 +19,9 @@ const Header = () => {
   const isActive = (path: string) => location.pathname === path;
 
   const handleNavClick = (path: string) => {
-    setIsMenuOpen(false);
     if (location.pathname === path) {
       navigate(path, { replace: true });
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'auto' }); // Changed from 'smooth' to 'auto'
     } else {
       navigate(path);
     }
@@ -120,22 +118,22 @@ const Header = () => {
         {isMenuOpen && (
           <div className="lg:hidden py-4 border-t">
             <div className="space-y-2">
-              <Link to="/" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/')}>Home</Link>
-              <Link to="/about" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/about')}>About</Link>
-              <Link to="/services" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/services')}>Services</Link>
-              <Link to="/services/strategy" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/services/strategy')}>- Strategy</Link>
-              <Link to="/services/operations" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/services/operations')}>- Operations</Link>
-              <Link to="/services/digital" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/services/digital')}>- Digital</Link>
-              <Link to="/industries" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/industries')}>Industries</Link>
-              <Link to="/industries/startups" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/industries/startups')}>- Startups</Link>
-              <Link to="/industries/manufacturing" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/industries/manufacturing')}>- Manufacturing</Link>
-              <Link to="/industries/healthcare" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/industries/healthcare')}>- Healthcare</Link>
-              <Link to="/industries/nonprofits" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/industries/nonprofits')}>- Nonprofits</Link>
-              <Link to="/case-studies" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/case-studies')}>Case Studies</Link>
-              <Link to="/blog" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/blog')}>Blog</Link>
-              <Link to="/contact" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/contact')}>Contact</Link>
+              <Link to="/" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Home</Link>
+              <Link to="/about" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">About</Link>
+              <Link to="/services" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Services</Link>
+              <Link to="/services/strategy" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">- Strategy</Link>
+              <Link to="/services/operations" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">- Operations</Link>
+              <Link to="/services/digital" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">- Digital</Link>
+              <Link to="/industries" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Industries</Link>
+              <Link to="/industries/startups" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">- Startups</Link>
+              <Link to="/industries/manufacturing" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">- Manufacturing</Link>
+              <Link to="/industries/healthcare" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">- Healthcare</Link>
+              <Link to="/industries/nonprofits" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">- Nonprofits</Link>
+              <Link to="/case-studies" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Case Studies</Link>
+              <Link to="/blog" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Blog</Link>
+              <Link to="/contact" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Contact</Link>
               <Button asChild className="w-full mt-4">
-                <Link to="/contact" onClick={() => handleNavClick('/contact')}>Book a Free Consultation</Link>
+                <Link to="/contact">Book a Free Consultation</Link>
               </Button>
             </div>
           </div>
