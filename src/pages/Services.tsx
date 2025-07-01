@@ -1,9 +1,18 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Target, Settings, Zap, ArrowRight, CheckCircle, Sparkles, TrendingUp, Users } from 'lucide-react';
 import { useState } from 'react';
+
+const gradientToClassNames = (normal: string, hover: string) => {
+  const normalClasses = normal.split(" ").join(" ");
+  const hoverClasses = hover
+    .split(" ")
+    .map(c => `hover:${c}`)
+    .join(" ");
+
+  return `bg-gradient-to-br ${normalClasses} ${hoverClasses}`;
+};
 
 const Services = () => {
   const [activeService, setActiveService] = useState<string | null>(null);

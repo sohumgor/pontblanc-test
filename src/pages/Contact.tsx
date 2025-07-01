@@ -15,7 +15,7 @@ const Contact = () => {
     projectOverview: ''
   });
 
-  const handleInputChange = (e: React.ChangeEventFormsInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value

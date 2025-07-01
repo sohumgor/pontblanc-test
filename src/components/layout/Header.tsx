@@ -40,7 +40,7 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center" onClick={() => handleNavClick('/')}>
+          <Link to="/" className="flex items-center">
             <span className="text-2xl font-bold text-primary">PontBlanc</span>
           </Link>
 
@@ -107,7 +107,7 @@ const Header = () => {
 
           {/* CTA Button */}
           <Button asChild className="hidden lg:inline-flex">
-            <Link to="/contact" onClick={() => handleNavClick('/contact')}>Book a Free Consultation</Link>
+            <Link to="/contact">Book a Free Consultation</Link>
           </Button>
 
           {/* Mobile Menu Button */}
@@ -120,13 +120,20 @@ const Header = () => {
         {isMenuOpen && (
           <div className="lg:hidden py-4 border-t">
             <div className="space-y-2">
-              <button onClick={() => handleNavClick('/')} className="block w-full text-left px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Home</button>
-              <button onClick={() => handleNavClick('/about')} className="block w-full text-left px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">About</button>
-              <button onClick={() => handleNavClick('/services')} className="block w-full text-left px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Services</button>
-              <button onClick={() => handleNavClick('/industries')} className="block w-full text-left px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Industries</button>
-              <button onClick={() => handleNavClick('/case-studies')} className="block w-full text-left px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Case Studies</button>
-              <button onClick={() => handleNavClick('/blog')} className="block w-full text-left px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Blog</button>
-              <button onClick={() => handleNavClick('/contact')} className="block w-full text-left px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Contact</button>
+              <Link to="/" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/')}>Home</Link>
+              <Link to="/about" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/about')}>About</Link>
+              <Link to="/services" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/services')}>Services</Link>
+              <Link to="/services/strategy" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/services/strategy')}>- Strategy</Link>
+              <Link to="/services/operations" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/services/operations')}>- Operations</Link>
+              <Link to="/services/digital" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/services/digital')}>- Digital</Link>
+              <Link to="/industries" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/industries')}>Industries</Link>
+              <Link to="/industries/startups" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/industries/startups')}>- Startups</Link>
+              <Link to="/industries/manufacturing" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/industries/manufacturing')}>- Manufacturing</Link>
+              <Link to="/industries/healthcare" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/industries/healthcare')}>- Healthcare</Link>
+              <Link to="/industries/nonprofits" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/industries/nonprofits')}>- Nonprofits</Link>
+              <Link to="/case-studies" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/case-studies')}>Case Studies</Link>
+              <Link to="/blog" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/blog')}>Blog</Link>
+              <Link to="/contact" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary" onClick={() => handleNavClick('/contact')}>Contact</Link>
               <Button asChild className="w-full mt-4">
                 <Link to="/contact" onClick={() => handleNavClick('/contact')}>Book a Free Consultation</Link>
               </Button>
