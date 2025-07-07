@@ -1,10 +1,21 @@
-
 import { Link } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Linkedin, Twitter, Mail } from 'lucide-react';
+import { Linkedin, Instagram, Mail } from 'lucide-react';
 
 const Footer = () => {
+  const handleEmailClick = () => {
+    window.location.href = 'mailto:info@pontblanc.com';
+  };
+
+  const handleLinkedInClick = () => {
+    window.open('https://www.linkedin.com', '_blank');
+  };
+
+  const handleInstagramClick = () => {
+    window.open('https://www.instagram.com', '_blank');
+  };
+
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -16,15 +27,27 @@ const Footer = () => {
               Professional consulting that partners with growth-minded businesses to optimize strategy, operations, and innovation execution. We deliver results—not reports.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">
+              <button 
+                onClick={handleLinkedInClick}
+                className="text-gray-300 hover:text-white transition-colors"
+                aria-label="LinkedIn"
+              >
                 <Linkedin size={20} />
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                <Twitter size={20} />
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">
+              </button>
+              <button 
+                onClick={handleInstagramClick}
+                className="text-gray-300 hover:text-pink-400 transition-colors"
+                aria-label="Instagram"
+              >
+                <Instagram size={20} />
+              </button>
+              <button 
+                onClick={handleEmailClick}
+                className="text-gray-300 hover:text-white transition-colors"
+                aria-label="Email"
+              >
                 <Mail size={20} />
-              </a>
+              </button>
             </div>
           </div>
 

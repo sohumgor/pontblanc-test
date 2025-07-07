@@ -1,11 +1,11 @@
-
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Mail, Phone, Linkedin, Twitter } from 'lucide-react';
+import { Mail, Phone, Linkedin, Instagram } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +14,8 @@ const Contact = () => {
     company: '',
     projectOverview: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -22,10 +24,77 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Handle form submission logic here
+    setIsSubmitting(true);
+
+    try {
+      // Create mailto link with form data
+      const subject = encodeURIComponent(`New Business Inquiry from ${formData.name} - ${formData.company}`);
+      const body = encodeURIComponent(`
+Hello Pontblanc Team,
+
+New business inquiry received:
+
+Name: ${formData.name}
+Email: ${formData.email}
+Company: ${formData.company}
+
+Project Overview:
+${formData.projectOverview}
+
+Please follow up to schedule a discovery call.
+
+Best regards,
+Website Contact Form
+      `);
+
+      const mailtoUrl = `mailto:info@pontblanc.com?subject=${subject}&body=${body}`;
+      window.location.href = mailtoUrl;
+
+      toast({
+        title: "Email Client Opened",
+        description: "Your email client should now be open with the message pre-filled. Send it to complete your inquiry.",
+      });
+
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        company: '',
+        projectOverview: ''
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "There was an issue opening your email client. Please try contacting us directly at info@pontblanc.com",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleEmailClick = () => {
+    window.location.href = 'mailto:info@pontblanc.com';
+  };
+
+  const handleLinkedInClick = () => {
+    window.open('https://www.linkedin.com', '_blank');
+  };
+
+  const handleInstagramClick = () => {
+    window.open('https://www.instagram.com', '_blank');
+  };
+
+  const handleCalendlyClick = () => {
+    // Open Calendly popup
+    if (window.Calendly) {
+      window.Calendly.initPopupWidget({ url: 'https://calendly.com/pontblanc/discovery-call' });
+    } else {
+      // Fallback to opening in new tab
+      window.open('https://calendly.com/pontblanc/discovery-call', '_blank');
+    }
   };
 
   return (
@@ -42,10 +111,7 @@ const Contact = () => {
           <Button
             size="lg"
             className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white px-10 py-5 text-lg font-semibold rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
-            onClick={() => {
-              const formSection = document.getElementById('contact-form');
-              formSection?.scrollIntoView({ behavior: 'smooth' });
-            }}
+            onClick={handleCalendlyClick}
           >
             Book a Free Discovery Call
           </Button>
@@ -126,9 +192,10 @@ const Contact = () => {
                     <Button
                       type="submit"
                       size="lg"
+                      disabled={isSubmitting}
                       className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 font-semibold py-5"
                     >
-                      Send Message & Schedule Call
+                      {isSubmitting ? 'Opening Email...' : 'Send Message & Schedule Call'}
                     </Button>
                   </form>
                 </CardContent>
@@ -142,9 +209,12 @@ const Contact = () => {
                 <div className="space-y-6 text-gray-700 text-lg">
                   <div className="flex items-center gap-4">
                     <Mail className="h-6 w-6 text-blue-600" />
-                    <a href="mailto:hello@pontblanc.com" className="hover:text-blue-600 transition-colors">
-                      hello@pontblanc.com
-                    </a>
+                    <button 
+                      onClick={handleEmailClick}
+                      className="hover:text-blue-600 transition-colors cursor-pointer"
+                    >
+                      info@pontblanc.com
+                    </button>
                   </div>
                   <div className="flex items-center gap-4">
                     <Phone className="h-6 w-6 text-blue-600" />
@@ -158,12 +228,20 @@ const Contact = () => {
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-5">Follow Us</h3>
                 <div className="flex space-x-6">
-                  <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors" aria-label="LinkedIn">
+                  <button 
+                    onClick={handleLinkedInClick}
+                    className="text-gray-400 hover:text-blue-600 transition-colors" 
+                    aria-label="LinkedIn"
+                  >
                     <Linkedin size={28} />
-                  </a>
-                  <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors" aria-label="Twitter">
-                    <Twitter size={28} />
-                  </a>
+                  </button>
+                  <button 
+                    onClick={handleInstagramClick}
+                    className="text-gray-400 hover:text-pink-600 transition-colors" 
+                    aria-label="Instagram"
+                  >
+                    <Instagram size={28} />
+                  </button>
                 </div>
               </div>
 
@@ -206,7 +284,11 @@ const Contact = () => {
                   <p className="text-gray-700 mb-5 text-sm">
                     Prefer to book a time that works for you? Use our calendar to schedule your free consultation.
                   </p>
-                  <Button variant="outline" className="w-full rounded-full py-4 font-semibold hover:bg-blue-600 hover:text-white transition-all duration-300">
+                  <Button 
+                    onClick={handleCalendlyClick}
+                    variant="outline" 
+                    className="w-full rounded-full py-4 font-semibold hover:bg-blue-600 hover:text-white transition-all duration-300"
+                  >
                     View Available Times
                   </Button>
                 </CardContent>
