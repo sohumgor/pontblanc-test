@@ -1,11 +1,10 @@
-
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Mail, Phone, Linkedin, Instagram, Calendar } from 'lucide-react';
+import { Mail, Phone, Linkedin, Instagram } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const Contact = () => {
@@ -30,27 +29,45 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      // Simulate sending email (in a real app, this would be an API call to your backend)
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Create mailto link with form data
+      const subject = encodeURIComponent(`New Business Inquiry from ${formData.name} - ${formData.company}`);
+      const body = encodeURIComponent(`
+Hello Pontblanc Team,
 
-      // Show success message
+New business inquiry received:
+
+Name: ${formData.name}
+Email: ${formData.email}
+Company: ${formData.company}
+
+Project Overview:
+${formData.projectOverview}
+
+Please follow up to schedule a discovery call.
+
+Best regards,
+Website Contact Form
+      `);
+
+      const mailtoUrl = `mailto:info@pontblanc.com?subject=${subject}&body=${body}`;
+      window.location.href = mailtoUrl;
+
       toast({
-        title: "Message Sent Successfully!",
-        description: "We've received your inquiry and will get back to you within 24 hours.",
+        title: "Email Client Opened",
+        description: "Your email client should now be open with the message pre-filled. Send it to complete your inquiry.",
       });
 
-      // Clear form
+      // Reset form
       setFormData({
         name: '',
         email: '',
         company: '',
         projectOverview: ''
       });
-
     } catch (error) {
       toast({
         title: "Error",
-        description: "There was an issue sending your message. Please try again or contact us directly.",
+        description: "There was an issue opening your email client. Please try contacting us directly at info@pontblanc.com",
         variant: "destructive",
       });
     } finally {
@@ -71,36 +88,12 @@ const Contact = () => {
   };
 
   const handleCalendlyClick = () => {
-    // Ensure Calendly script is loaded before trying to open popup
-    if (window.Calendly && window.Calendly.initPopupWidget) {
-      window.Calendly.initPopupWidget({ 
-        url: 'https://calendly.com/pontblanc/discovery-call',
-        pageSettings: {
-          backgroundColor: 'ffffff',
-          hideEventTypeDetails: false,
-          hideLandingPageDetails: false,
-          primaryColor: '2563eb',
-          textColor: '4a5568'
-        }
-      });
+    // Open Calendly popup
+    if (window.Calendly) {
+      window.Calendly.initPopupWidget({ url: 'https://calendly.com/pontblanc/discovery-call' });
     } else {
-      // Fallback: wait a moment and try again, or open in new tab
-      setTimeout(() => {
-        if (window.Calendly && window.Calendly.initPopupWidget) {
-          window.Calendly.initPopupWidget({ 
-            url: 'https://calendly.com/pontblanc/discovery-call',
-            pageSettings: {
-              backgroundColor: 'ffffff',
-              hideEventTypeDetails: false,
-              hideLandingPageDetails: false,
-              primaryColor: '2563eb',
-              textColor: '4a5568'
-            }
-          });
-        } else {
-          window.open('https://calendly.com/pontblanc/discovery-call', '_blank');
-        }
-      }, 500);
+      // Fallback to opening in new tab
+      window.open('https://calendly.com/pontblanc/discovery-call', '_blank');
     }
   };
 
@@ -113,27 +106,15 @@ const Contact = () => {
             Let's Talk About Your <span className="bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-600 bg-clip-text text-transparent">Growth Goals</span>
           </h1>
           <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8">
-            Ready to transform your business? Get in touch or schedule a free discovery call to discuss how we can help you achieve breakthrough results.
+            Ready to transform your business? Schedule a free discovery call to discuss how we can help you achieve breakthrough results.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button
-              size="lg"
-              className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white px-8 py-5 text-lg font-semibold rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
-              onClick={handleCalendlyClick}
-            >
-              <Calendar className="mr-2 h-5 w-5" />
-              Schedule Free Discovery Call
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-5 text-lg font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
-              onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              <Mail className="mr-2 h-5 w-5" />
-              Send Message
-            </Button>
-          </div>
+          <Button
+            size="lg"
+            className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white px-10 py-5 text-lg font-semibold rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+            onClick={handleCalendlyClick}
+          >
+            Book a Free Discovery Call
+          </Button>
         </div>
       </section>
 
@@ -145,9 +126,9 @@ const Contact = () => {
             <div id="contact-form">
               <Card className="rounded-3xl shadow-lg border-0">
                 <CardHeader>
-                  <CardTitle className="text-3xl font-extrabold text-gray-900">Send Us a Message</CardTitle>
+                  <CardTitle className="text-3xl font-extrabold text-gray-900">Get Started Today</CardTitle>
                   <CardDescription className="text-gray-700 text-lg max-w-xl">
-                    Fill out the form below and we'll get back to you within 24 hours.
+                    Fill out the form below and we'll get back to you within 24 hours to schedule your free consultation.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -214,7 +195,7 @@ const Contact = () => {
                       disabled={isSubmitting}
                       className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 font-semibold py-5"
                     >
-                      {isSubmitting ? 'Sending Message...' : 'Send Message'}
+                      {isSubmitting ? 'Opening Email...' : 'Send Message & Schedule Call'}
                     </Button>
                   </form>
                 </CardContent>
@@ -297,20 +278,17 @@ const Contact = () => {
                 </CardContent>
               </Card>
 
-              <Card className="rounded-3xl shadow-md border-0 bg-blue-50">
+              <Card className="rounded-3xl shadow-md border-0 bg-gray-50">
                 <CardContent className="p-6">
-                  <h3 className="font-semibold mb-3 text-gray-900 flex items-center gap-2">
-                    <Calendar className="h-5 w-5 text-blue-600" />
-                    Book a Time That Works for You
-                  </h3>
+                  <h3 className="font-semibold mb-3 text-gray-900">Schedule Directly</h3>
                   <p className="text-gray-700 mb-5 text-sm">
-                    Skip the back-and-forth emails. Use our calendar to instantly schedule your free consultation at a time that works for you.
+                    Prefer to book a time that works for you? Use our calendar to schedule your free consultation.
                   </p>
                   <Button 
                     onClick={handleCalendlyClick}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-full py-4 font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
+                    variant="outline" 
+                    className="w-full rounded-full py-4 font-semibold hover:bg-blue-600 hover:text-white transition-all duration-300"
                   >
-                    <Calendar className="mr-2 h-4 w-4" />
                     View Available Times
                   </Button>
                 </CardContent>
