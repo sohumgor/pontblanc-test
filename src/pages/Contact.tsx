@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Mail, Phone, Linkedin, Instagram } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -29,51 +30,36 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      // Create a well-formatted email
-      const subject = `Business Inquiry from ${formData.name} - ${formData.company}`;
-      const body = `Hello Pontblanc Team,
+      console.log('Submitting contact form:', formData);
 
-I would like to discuss a potential project with you.
-
-Contact Details:
-• Name: ${formData.name}
-• Email: ${formData.email}
-• Company: ${formData.company}
-
-Project Overview:
-${formData.projectOverview}
-
-Please contact me to schedule a discovery call.
-
-Best regards,
-${formData.name}`;
-
-      // Create mailto link
-      const mailtoUrl = `mailto:info@pontblanc.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      
-      // Open mailto link
-      window.location.href = mailtoUrl;
-
-      // Show success message
-      toast({
-        title: "Message Prepared Successfully!",
-        description: "Your email client has opened with your message pre-filled. Please send the email to complete your inquiry.",
+      const { data, error } = await supabase.functions.invoke('send-contact-email', {
+        body: formData
       });
 
-      // Clear form after a short delay to allow the mailto to process
-      setTimeout(() => {
-        setFormData({
-          name: '',
-          email: '',
-          company: '',
-          projectOverview: ''
-        });
-      }, 1000);
+      if (error) {
+        throw error;
+      }
 
-    } catch (error) {
+      console.log('Email sent successfully:', data);
+
       toast({
-        title: "Error",
-        description: "There was an issue preparing your message. Please try again or contact us directly at info@pontblanc.com",
+        title: "Message Sent Successfully!",
+        description: "Thank you for your inquiry. We'll get back to you within 24 hours.",
+      });
+
+      // Clear form after successful submission
+      setFormData({
+        name: '',
+        email: '',
+        company: '',
+        projectOverview: ''
+      });
+
+    } catch (error: any) {
+      console.error('Error sending contact email:', error);
+      toast({
+        title: "Error Sending Message",
+        description: "There was an issue sending your message. Please try again or contact us directly at info@pontblanc.com",
         variant: "destructive",
       });
     } finally {
@@ -201,7 +187,7 @@ ${formData.name}`;
                       disabled={isSubmitting}
                       className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 font-semibold py-5"
                     >
-                      {isSubmitting ? 'Preparing Message...' : 'Send Message'}
+                      {isSubmitting ? 'Sending Message...' : 'Send Message'}
                     </Button>
                   </form>
 
