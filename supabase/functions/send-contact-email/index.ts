@@ -30,10 +30,11 @@ const handler = async (req: Request): Promise<Response> => {
 
     const emailResponse = await resend.emails.send({
       from: "PontBlanc Contact Form <onboarding@resend.dev>",
-      to: ["info@pontblanc.com"],
+      to: ["sohum1759@gmail.com"],
+      reply_to: email,
       subject: `Business Inquiry from ${name} - ${company}`,
       html: `
-        <h2>New Business Inquiry</h2>
+        <h2>New Business Inquiry from PontBlanc Website</h2>
         <p><strong>Contact Details:</strong></p>
         <ul>
           <li><strong>Name:</strong> ${name}</li>
@@ -42,10 +43,11 @@ const handler = async (req: Request): Promise<Response> => {
         </ul>
         
         <p><strong>Project Overview:</strong></p>
-        <p>${projectOverview.replace(/\n/g, '<br>')}</p>
+        <p style="background-color: #f5f5f5; padding: 15px; border-left: 4px solid #0066cc; margin: 10px 0;">${projectOverview.replace(/\n/g, '<br>')}</p>
         
-        <hr>
-        <p><em>This inquiry was submitted through the PontBlanc website contact form.</em></p>
+        <hr style="margin: 20px 0;">
+        <p><em>This inquiry was submitted through the PontBlanc website contact form at ${new Date().toLocaleString()}.</em></p>
+        <p><strong>Reply directly to this email to respond to ${name} at ${email}</strong></p>
       `,
     });
 
