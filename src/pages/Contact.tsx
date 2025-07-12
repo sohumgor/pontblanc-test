@@ -29,45 +29,51 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      // Create mailto link with form data
-      const subject = encodeURIComponent(`New Business Inquiry from ${formData.name} - ${formData.company}`);
-      const body = encodeURIComponent(`
-Hello Pontblanc Team,
+      // Create a well-formatted email
+      const subject = `Business Inquiry from ${formData.name} - ${formData.company}`;
+      const body = `Hello Pontblanc Team,
 
-New business inquiry received:
+I would like to discuss a potential project with you.
 
-Name: ${formData.name}
-Email: ${formData.email}
-Company: ${formData.company}
+Contact Details:
+• Name: ${formData.name}
+• Email: ${formData.email}
+• Company: ${formData.company}
 
 Project Overview:
 ${formData.projectOverview}
 
-Please follow up to schedule a discovery call.
+Please contact me to schedule a discovery call.
 
 Best regards,
-Website Contact Form
-      `);
+${formData.name}`;
 
-      const mailtoUrl = `mailto:info@pontblanc.com?subject=${subject}&body=${body}`;
+      // Create mailto link
+      const mailtoUrl = `mailto:info@pontblanc.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      
+      // Open mailto link
       window.location.href = mailtoUrl;
 
+      // Show success message
       toast({
-        title: "Email Client Opened",
-        description: "Your email client should now be open with the message pre-filled. Send it to complete your inquiry.",
+        title: "Message Prepared Successfully!",
+        description: "Your email client has opened with your message pre-filled. Please send the email to complete your inquiry.",
       });
 
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        company: '',
-        projectOverview: ''
-      });
+      // Clear form after a short delay to allow the mailto to process
+      setTimeout(() => {
+        setFormData({
+          name: '',
+          email: '',
+          company: '',
+          projectOverview: ''
+        });
+      }, 1000);
+
     } catch (error) {
       toast({
         title: "Error",
-        description: "There was an issue opening your email client. Please try contacting us directly at info@pontblanc.com",
+        description: "There was an issue preparing your message. Please try again or contact us directly at info@pontblanc.com",
         variant: "destructive",
       });
     } finally {
@@ -126,9 +132,9 @@ Website Contact Form
             <div id="contact-form">
               <Card className="rounded-3xl shadow-lg border-0">
                 <CardHeader>
-                  <CardTitle className="text-3xl font-extrabold text-gray-900">Get Started Today</CardTitle>
+                  <CardTitle className="text-3xl font-extrabold text-gray-900">Send Us a Message</CardTitle>
                   <CardDescription className="text-gray-700 text-lg max-w-xl">
-                    Fill out the form below and we'll get back to you within 24 hours to schedule your free consultation.
+                    Fill out the form below and we'll get back to you within 24 hours to discuss your project.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -195,9 +201,24 @@ Website Contact Form
                       disabled={isSubmitting}
                       className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 font-semibold py-5"
                     >
-                      {isSubmitting ? 'Opening Email...' : 'Send Message & Schedule Call'}
+                      {isSubmitting ? 'Preparing Message...' : 'Send Message'}
                     </Button>
                   </form>
+
+                  {/* Separate Schedule Button */}
+                  <div className="mt-6 pt-6 border-t border-gray-200">
+                    <p className="text-sm text-gray-600 mb-4 text-center">
+                      Or schedule a call directly:
+                    </p>
+                    <Button
+                      onClick={handleCalendlyClick}
+                      variant="outline"
+                      size="lg"
+                      className="w-full rounded-full py-4 font-semibold hover:bg-blue-600 hover:text-white transition-all duration-300"
+                    >
+                      Schedule Free Discovery Call
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             </div>
