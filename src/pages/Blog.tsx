@@ -2,13 +2,62 @@
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
-import { Clock, ArrowRight, Calendar, User } from 'lucide-react';
+import { Clock, ArrowRight, Calendar, User, Loader2 } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const Blog = () => {
   const [visibleArticles, setVisibleArticles] = useState(6);
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+
+  const handleNewsletterSignup = async () => {
+    if (!email.trim()) {
+      toast({
+        title: "Email Required",
+        description: "Please enter your email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('newsletter-signup', {
+        body: { email: email.trim(), source: 'blog' }
+      });
+
+      if (error) throw error;
+
+      if (data.success) {
+        toast({
+          title: "Successfully Subscribed!",
+          description: data.message,
+        });
+        setEmail('');
+      } else {
+        toast({
+          title: "Subscription Failed",
+          description: data.error || "Please try again later.",
+          variant: "destructive",
+        });
+      }
+    } catch (error: any) {
+      console.error('Newsletter signup error:', error);
+      toast({
+        title: "Subscription Failed",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const categories = [
     { name: "All", count: 24 },
@@ -271,15 +320,27 @@ const Blog = () => {
             Get weekly strategic insights delivered to your inbox. Join 2,500+ business leaders.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
-            <input
+            <Input
               type="email"
               placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleNewsletterSignup()}
               className="px-6 py-3 rounded-full text-gray-900 flex-1 focus:outline-none focus:ring-2 focus:ring-white/50"
             />
             <Button 
               className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-full font-semibold"
+              onClick={handleNewsletterSignup}
+              disabled={isLoading}
             >
-              Subscribe
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Subscribing...
+                </>
+              ) : (
+                'Subscribe'
+              )}
             </Button>
           </div>
         </div>

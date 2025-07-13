@@ -3,15 +3,53 @@ import { useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Clock, Calendar, User, Share2, BookOpen } from 'lucide-react';
+import { ArrowLeft, Clock, Calendar, User, Share2, BookOpen, Twitter, Linkedin, Facebook, Copy, ChevronDown } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
 const BlogArticle = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [id]);
+
+  const shareArticle = (platform: string) => {
+    const article = allArticles.find(a => a.id === parseInt(id || '0'));
+    if (!article) return;
+
+    const url = window.location.href;
+    const title = article.title;
+    const text = article.excerpt;
+
+    switch (platform) {
+      case 'twitter':
+        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, '_blank');
+        break;
+      case 'linkedin':
+        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
+        break;
+      case 'facebook':
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+        break;
+      case 'copy':
+        navigator.clipboard.writeText(url).then(() => {
+          toast({
+            title: "Link Copied!",
+            description: "Article link has been copied to your clipboard.",
+          });
+        }).catch(() => {
+          toast({
+            title: "Copy Failed",
+            description: "Please copy the link manually from the address bar.",
+            variant: "destructive",
+          });
+        });
+        break;
+    }
+  };
 
   // Sample article data - in a real app, this would come from an API
   const allArticles = [
@@ -146,10 +184,33 @@ const BlogArticle = () => {
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Blog
             </Button>
-            <Button variant="outline" size="sm" className="text-gray-600">
-              <Share2 className="mr-2 h-4 w-4" />
-              Share
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="text-gray-600">
+                  <Share2 className="mr-2 h-4 w-4" />
+                  Share
+                  <ChevronDown className="ml-2 h-3 w-3" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem onClick={() => shareArticle('twitter')} className="cursor-pointer">
+                  <Twitter className="mr-2 h-4 w-4" />
+                  Share on Twitter
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => shareArticle('linkedin')} className="cursor-pointer">
+                  <Linkedin className="mr-2 h-4 w-4" />
+                  Share on LinkedIn
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => shareArticle('facebook')} className="cursor-pointer">
+                  <Facebook className="mr-2 h-4 w-4" />
+                  Share on Facebook
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => shareArticle('copy')} className="cursor-pointer">
+                  <Copy className="mr-2 h-4 w-4" />
+                  Copy Link
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </div>

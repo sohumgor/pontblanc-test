@@ -1,9 +1,16 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Linkedin, Instagram, Mail } from 'lucide-react';
+import { Linkedin, Instagram, Mail, Loader2 } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const Footer = () => {
+  const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+
   const handleEmailClick = () => {
     window.location.href = 'mailto:info@pontblanc.com';
   };
@@ -14,6 +21,49 @@ const Footer = () => {
 
   const handleInstagramClick = () => {
     window.open('https://www.instagram.com', '_blank');
+  };
+
+  const handleNewsletterSignup = async () => {
+    if (!email.trim()) {
+      toast({
+        title: "Email Required",
+        description: "Please enter your email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('newsletter-signup', {
+        body: { email: email.trim(), source: 'footer' }
+      });
+
+      if (error) throw error;
+
+      if (data.success) {
+        toast({
+          title: "Successfully Subscribed!",
+          description: data.message,
+        });
+        setEmail('');
+      } else {
+        toast({
+          title: "Subscription Failed",
+          description: data.error || "Please try again later.",
+          variant: "destructive",
+        });
+      }
+    } catch (error: any) {
+      console.error('Newsletter signup error:', error);
+      toast({
+        title: "Subscription Failed",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -68,8 +118,29 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Stay Updated</h4>
             <p className="text-gray-300 mb-4 text-sm">Get weekly business insights from our experts.</p>
             <div className="flex flex-col space-y-2">
-              <Input type="email" placeholder="Your email" className="bg-gray-800 border-gray-700 text-white" />
-              <Button size="sm" className="w-full">Subscribe</Button>
+              <Input 
+                type="email" 
+                placeholder="Your email" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleNewsletterSignup()}
+                className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400" 
+              />
+              <Button 
+                size="sm" 
+                className="w-full" 
+                onClick={handleNewsletterSignup}
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Subscribing...
+                  </>
+                ) : (
+                  'Subscribe'
+                )}
+              </Button>
             </div>
           </div>
         </div>

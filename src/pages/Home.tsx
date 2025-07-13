@@ -1,11 +1,62 @@
 
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
-import { ArrowRight, CheckCircle, Target, Users, TrendingUp, Star, Zap, Shield } from 'lucide-react';
+import { ArrowRight, CheckCircle, Target, Users, TrendingUp, Star, Zap, Shield, Loader2, Mail } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const Home = () => {
+  const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+
+  const handleNewsletterSignup = async () => {
+    if (!email.trim()) {
+      toast({
+        title: "Email Required",
+        description: "Please enter your email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('newsletter-signup', {
+        body: { email: email.trim(), source: 'home' }
+      });
+
+      if (error) throw error;
+
+      if (data.success) {
+        toast({
+          title: "Successfully Subscribed!",
+          description: data.message,
+        });
+        setEmail('');
+      } else {
+        toast({
+          title: "Subscription Failed",
+          description: data.error || "Please try again later.",
+          variant: "destructive",
+        });
+      }
+    } catch (error: any) {
+      console.error('Newsletter signup error:', error);
+      toast({
+        title: "Subscription Failed",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
   const services = [
     {
       icon: <Target className="h-6 w-6 sm:h-8 sm:w-8 md:h-10 md:w-10" />,
@@ -244,6 +295,53 @@ const Home = () => {
               </Card>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Newsletter Section */}
+      <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-600">
+        <div className="max-w-4xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 text-center text-white">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black mb-2 sm:mb-3 md:mb-4">
+            Stay Ahead of the Competition
+          </h2>
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-4 sm:mb-6 md:mb-8 opacity-90 px-2 sm:px-4">
+            Get weekly business insights, strategic tips, and exclusive content delivered to your inbox.
+          </p>
+          <Card className="max-w-md mx-auto bg-white/10 backdrop-blur-lg border-0 shadow-2xl rounded-2xl sm:rounded-3xl">
+            <CardContent className="p-4 sm:p-6 md:p-8">
+              <div className="space-y-3 sm:space-y-4 md:space-y-6">
+                <div>
+                  <Label htmlFor="newsletter-email" className="text-white font-semibold text-sm sm:text-base">
+                    <Mail className="h-4 w-4 sm:h-5 sm:w-5 inline mr-2" />
+                    Email Address
+                  </Label>
+                  <Input 
+                    id="newsletter-email" 
+                    type="email" 
+                    placeholder="your@email.com" 
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && handleNewsletterSignup()}
+                    className="bg-white/20 border-white/30 text-white placeholder:text-white/70 mt-2" 
+                  />
+                </div>
+                <Button 
+                  className="w-full bg-white text-blue-600 hover:bg-gray-100 font-bold py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg rounded-full transform hover:scale-105 transition-all duration-300 shadow-lg"
+                  onClick={handleNewsletterSignup}
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
+                      Subscribing...
+                    </>
+                  ) : (
+                    'Subscribe to Newsletter'
+                  )}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
