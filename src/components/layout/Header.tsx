@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import logoSvg from '@/assets/pontblanclogo.svg';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -47,7 +48,8 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center" onClick={() => setIsMenuOpen(false)}>
+          <Link to="/" className="flex items-center gap-2" onClick={() => setIsMenuOpen(false)}>
+            <img src={logoSvg} alt="PontBlanc Logo" className="h-8 w-8" />
             <span className="text-xl sm:text-2xl font-bold text-primary">PontBlanc</span>
           </Link>
 

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import logoSvg from '@/assets/pontblanclogo.svg';
 import { Linkedin, Instagram, Mail, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -72,7 +73,10 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
-            <h3 className="text-2xl font-bold mb-4">PONTBLANC</h3>
+            <div className="flex items-center gap-2 mb-4">
+              <img src={logoSvg} alt="PontBlanc Logo" className="h-8 w-8" />
+              <h3 className="text-2xl font-bold">PONTBLANC</h3>
+            </div>
             <p className="text-gray-300 mb-6 max-w-md">
               Professional consulting that partners with growth-minded businesses to optimize strategy, operations, and innovation execution. We deliver results—not reports.
             </p>
