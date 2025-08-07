@@ -48,9 +48,13 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2" onClick={() => setIsMenuOpen(false)}>
-            <img src={logoSvg} alt="PontBlanc Logo" className="h-8 w-8" />
-            <span className="text-xl sm:text-2xl font-bold text-primary">PontBlanc</span>
+          <Link to="/" className="flex items-center gap-2 sm:gap-3" onClick={() => setIsMenuOpen(false)}>
+            <img 
+              src={logoSvg} 
+              alt="PontBlanc Logo" 
+              className="h-10 w-10 sm:h-12 sm:w-12 lg:h-14 lg:w-14 object-contain flex-shrink-0" 
+            />
+            <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-primary">PontBlanc</span>
           </Link>
 
           {/* Desktop Navigation */}

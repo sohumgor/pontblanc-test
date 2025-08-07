@@ -1,0 +1,5 @@
+<svg width="1000" height="1000" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+  <!-- Placeholder logo - replace with your actual logo -->
+  <circle cx="500" cy="500" r="400" fill="none" stroke="currentColor" stroke-width="40"/>
+  <text x="500" y="520" text-anchor="middle" font-family="Arial, sans-serif" font-size="200" font-weight="bold" fill="currentColor">PB</text>
+</svg>
